@@ -1,0 +1,183 @@
+<div class="grid">
+
+  <div class="col-12">
+    <div class="card mb-4" style="height: 80vh;">
+      <div class="card-header">
+        <h5 class="text-500 float-end">Registrar Pedido</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="registrarPedidoForm" (ngSubmit)="registrarPedido()">
+          <div class="formgrid grid">
+            <div class="field col-4 mb-2">
+              <div class="flex flex-column">
+                <label class="pb-2" for="basic-icon-default-fullname">Cliente</label>
+                <p-dropdown
+                  formControlName="cliente"
+                  [options]="clientesService.clientes()"
+                  optionLabel="nombre"
+                  optionValue="id"
+                  placeholder="Seleccione un cliente"
+                  class="p-inputtext-sm"
+                  styleClass="w-full"
+                  >
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">Fecha de entrega</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-calendar"></i></span>
+                  <p-calendar
+                    formControlName="fechaEntrega"
+                    class="p-inputtext-sm"
+                    styleClass="w-full"
+                    >
+                  </p-calendar>
+              </div>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">Lugar de entrega</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-user"></i></span>
+                <input
+                  type="text"
+                  formControlName="lugarEntrega"
+                  pInputText
+                  class="p-inputtext-sm w-full"
+                  >
+              </div>
+            </div>
+
+            <div class="field col-12 m-0 p-0" formArrayName="articulos">
+              <div
+                class="formgrid grid m-0 p-0"
+                *ngFor="let producto of productoSolicitados().controls; let i=index"
+                [formGroupName]="i">
+
+                <div class="field col-6 mb-2">
+                  <div class="flex flex-column">
+                    <label class="pb-2" for="basic-icon-default-fullname">Producto</label>
+                    <p-dropdown
+                      formControlName="articulo"
+                      [options]="inventarioService.inventario()"
+                      optionLabel="articulo"
+                      optionValue="id"
+                      placeholder="Seleccione un cliente"
+                      class="p-inputtext-sm"
+                      styleClass="w-full"
+                      (onChange)="asignarValoresArticulo($event, producto )"
+                      >
+                    </p-dropdown>
+                  </div>
+                </div>
+                <div class="field col-4 mb-2">
+                  <label class="form-label" for="basic-icon-default-fullname">Cantidad</label>
+                  <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class="bx bx-plus"></i></span>
+                    <p-inputNumber
+                      inputId="integeronly"
+                      [min]="0"
+                      [max]="1000"
+                      formControlName="cantidad"
+                      class="p-inputtext-sm w-full"
+                      styleClass="w-full"
+                      (onInput)="calcularTotal()"
+                      >
+                    </p-inputNumber>
+                  </div>
+                </div>
+                <div class="field col-2 mb-2">
+                  <label class="form-label" for="basic-icon-default-fullname">Disponible</label>
+                  <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i
+                        class="bx bx-check text-success"></i></span>
+                    <p-inputNumber
+                      inputId="integeronly"
+                      formControlName="disponible"
+                      class="p-inputtext-sm w-full"
+                      styleClass="w-full"
+                      >
+                    </p-inputNumber>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field col-12 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">.</label>
+              <div class="flex justify-content-center">
+                <p-button
+                  [outlined]="true"
+                  severity="info"
+                  size="small"
+                  type="button"
+                  (click)="addProducto()"
+                  label="Añadir más"
+                  icon="pi pi-plus"
+                  >
+                </p-button>
+              </div>
+            </div>
+
+            <div class="field col-6 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">Costo Total</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-dollar"></i></span>
+                <p-inputNumber
+                  inputId="integeronly"
+                  mode="currency"
+                  currency="USD"
+                  locale="en-US"
+                  formControlName="total"
+                  class="p-inputtext-sm w-full"
+                  styleClass="w-full"
+                  (onFocus)="calcularTotal()"
+                  >
+                </p-inputNumber>
+              </div>
+            </div>
+            <div class="field col-6 mb-2">
+              <div class="flex flex-column">
+                <label class="pb-2" for="basic-icon-default-fullname">Estatus</label>
+                <p-dropdown
+                  formControlName="estatus"
+                  [options]="listasService.estatus()"
+                  optionLabel="desc"
+                  optionValue="id"
+                  class="p-inputtext-sm"
+                  styleClass="w-full"
+                  >
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="field col-12 mt-4">
+              <div class="flex justify-content-end gap-2">
+                <p-button
+                  type="submit"
+                  severity="primary"
+                  size="small"
+                  icon="pi pi-plus"
+                  label="Registrar">
+                </p-button>
+                <p-button
+                  type="button"
+                  severity="warning"
+                  size="small"
+                  icon="pi pi-file-edit"
+                  label="Editar">
+                </p-button>
+                <p-button
+                  type="button"
+                  label="Cancelar"
+                  severity="danger"
+                  size="small"
+                  icon="pi pi-trash"
+                  [outlined]="true"></p-button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

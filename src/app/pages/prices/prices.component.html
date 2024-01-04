@@ -1,0 +1,103 @@
+<div class="grid">
+
+  <div class="col-12">
+
+    <div class="card">
+      <h5>Precios</h5>
+      <p-dataView #dv [value]="pricesService.prices()" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid" >
+        <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <p-dropdown
+              [options]="sortOptions"
+              [(ngModel)]="sortKey"
+              placeholder="Ordenar por Precio"
+              (onChange)="onSortChange( $event )" >
+            </p-dropdown>
+            <div class="flex flex-column md:flex-row gap-2">
+              <div>
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon">Bs.</span>
+                  <input
+                    type="text"
+                    pInputText
+                    [placeholder]="this.listasService.tipoCambio()"
+                    [(ngModel)]="valorDolar" />
+                  <button
+                    type="button"
+                    pButton
+                    icon="pi pi-refresh"
+                    styleClass="p-button-warn"
+                    (click)="upgradeTipoCambio()"></button>
+                </div>
+              </div>
+              <div>
+                <p-dataViewLayoutOptions>Options</p-dataViewLayoutOptions>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template let-precio pTemplate="listItem">
+          <div class="col-12" *ngFor="let item of precio; let first = first">
+            <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+              <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+                [src]="'assets/img/elements/' + item.producto.img" [alt]="item.articulo" />
+              <div
+                class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                  <div class="text-2xl font-bold text-900">{{ item.articulo }}</div>
+                  <p-rating [(ngModel)]="item?.producto.rating" [readonly]="true" [cancel]="false"></p-rating>
+                  <!-- <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                    <i class="pi pi-tag"></i>
+                                    <span class="font-semibold">{{ precio.category }}</span>
+                                </span>
+                                <p-tag [value]="precio.inventoryStatus" [severity]="getSeverity(precio)"></p-tag>
+                            </div> -->
+                </div>
+                <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                  <span class="text-2xl font-semibold">{{ '$ ' + item.producto.precio_venta }}</span>
+                  <span
+                    class="text-2xl
+                    font-semibold">{{ 'Bs. ' + ( item.producto.precio_venta * listasService.tipoCambio() | number: '1.0-0')  }}</span>
+                  <!-- <button pButton icon="pi pi-shopping-cart" class="md:align-self-end mb-2 p-button-rounded" [disabled]="precio.inventoryStatus === 'OUTOFSTOCK'"></button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template let-precio pTemplate="gridItem">
+          <div class="grid">
+            <div class="col-12 sm:col-6 lg:col-4 xl:col-4" *ngFor="let item of precio; let first = first">
+              <div class="px-3 py-2 border-1 surface-border surface-card border-round">
+                <!--                     <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+                          <span class="flex align-items-center gap-2">
+                              <i class="pi pi-tag"></i>
+                              <span class="font-semibold">{{ precio.category }}</span>
+                          </span>
+                          <p-tag [value]="precio.inventoryStatus" [severity]="getSeverity(precio)"></p-tag>
+                      </div> -->
+                <div class="flex flex-column align-items-center gap-3 py-5">
+                  <img class="w-9 shadow-2 border-round" [src]="'./assets/img/elements/' + item.producto?.img"
+                    [alt]="item.articulo" />
+                  <div class="text-2xl font-bold">{{ item.articulo }}</div>
+                  <p-rating [ngModel]="item.producto?.rating" [readonly]="true" [cancel]="false"></p-rating>
+                </div>
+                <div class="flex align-items-center justify-content-between">
+                  <span class="text-2xl font-semibold">{{ '$ ' + item.producto?.precio_venta }}</span>
+                  <span
+                    class="text-2xl
+                    font-semibold">{{ 'Bs. ' + ( item.producto?.precio_venta * listasService.tipoCambio() | number: '1.0-0')  }}</span>
+                  <!-- <button pButton icon="pi pi-shopping-cart" class="p-button-rounded" [disabled]="precio.inventoryStatus === 'OUTOFSTOCK'"></button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="empty">
+          Sin registros...
+        </ng-template>
+      </p-dataView>
+    </div>
+
+  </div>
+</div>

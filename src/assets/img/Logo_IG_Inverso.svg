@@ -1,0 +1,13 @@
+<svg id="LOGO" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="896" height="300" viewBox="0 0 896 300">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 1250px;
+        fill: #0cc;
+        font-family: Caxo;
+      }
+    </style>
+  </defs>
+  <text id="DEUX" class="cls-1" transform="translate(52.226 270.803) scale(0.239)">DEUX</text>
+  <image x="529" y="38" width="54" height="53" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAA1CAYAAAAK0RhzAAABOUlEQVRoge2a0Q7DIAhFddn/f1n/qUuW2FgFRYsV0PPYVLknVB42vTsON5CzsrXPnjDxZdyrJgGRrmET5RDrEcKI93ok+USMUwgi7N8l2CM2Wgir1yT4yZ6UeVsqpqk2VeycLBXnIEERkyAUQ8pTE5MmFajmKolJlQoU85XENIDKYWLoAoGAWSEx8EVtcpCYCVKxzFwRt+xLdExztwKXg/mOWejWDYsd+zdpmXFvBtNi5gaHM9yxc58xbWwxZXjTHRv2j8dM9hnTxhZThI/FzA2QJT5FC127HJYZHpq7dsu+1LjX2LUsMyQGvigYMCsmplrKVcTQRUIo5iuJSZar5qJ8itLkSHmoZ8wLESRnaB0eM+WaavdcEgsF3voF+bXbb2nBUYLT7iumATgERd0wDUChKLL859Y59wOw3ycSvlbr+QAAAABJRU5ErkJggg=="/>
+</svg>
