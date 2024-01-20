@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "deuxApp17": {
+    "deuxApp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "deuxApp17:build:production"
+              "buildTarget": "deuxApp:build:production"
             },
             "development": {
-              "buildTarget": "deuxApp17:build:development"
+              "buildTarget": "deuxApp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "deuxApp17:build"
+            "buildTarget": "deuxApp:build"
           }
         },
         "test": {
