@@ -33,73 +33,73 @@ export class MenuComponent {
         items: [
           {
             label: 'Precios',
-            icon: 'pi pi-fw pi-eye',
+            icon: 'pi pi-fw pi-tag',
             routerLink: ['/precios'],
             badge: 'NEW',
           },
           {
             label: 'Cuenta',
-            icon: 'pi pi-fw pi-user',
+            icon: 'pi pi-fw pi-dollar',
             items: [
               {
                 label: 'Consolidado',
-                icon: 'pi pi-fw pi-sign-in',
+                icon: 'pi pi-fw pi-list',
                 routerLink: ['/cuenta'],
               },
               {
                 label: 'Registrar',
-                icon: 'pi pi-fw pi-times-circle',
+                icon: 'pi pi-fw pi-sign-in',
                 routerLink: ['/cuenta/registrar'],
               },
             ],
           },
           {
             label: 'Inventario',
-            icon: 'pi pi-fw pi-eye',
+            icon: 'pi pi-fw pi-list',
             routerLink: ['/inventario'],
             badge: 'NEW',
           },
           {
             label: 'Productos',
-            icon: 'pi pi-fw pi-user',
+            icon: 'pi pi-fw pi-shopping-bag',
             items: [
               {
                 label: 'Lista',
-                icon: 'pi pi-fw pi-sign-in',
+                icon: 'pi pi-fw pi-list',
                 routerLink: ['/productos'],
               },
               {
                 label: 'Configurar',
-                icon: 'pi pi-fw pi-times-circle',
+                icon: 'pi pi-fw pi-sign-in',
                 routerLink: ['/productos/configurar'],
               },
             ],
           },
           {
             label: 'Insumos',
-            icon: 'pi pi-fw pi-eye',
+            icon: 'pi pi-fw pi-box',
             routerLink: ['/insumos'],
             badge: 'NEW',
           },
           {
             label: 'Pedidos',
-            icon: 'pi pi-fw pi-user',
+            icon: 'pi pi-fw pi-shopping-cart',
             items: [
               {
                 label: 'Lista',
-                icon: 'pi pi-fw pi-sign-in',
+                icon: 'pi pi-fw pi-list',
                 routerLink: ['/pedidos'],
               },
               {
                 label: 'Registrar',
-                icon: 'pi pi-fw pi-times-circle',
+                icon: 'pi pi-fw pi-sign-in',
                 routerLink: ['/pedidos/registrar'],
               },
             ],
           },
           {
             label: 'Clientes',
-            icon: 'pi pi-fw pi-eye',
+            icon: 'pi pi-fw pi-users',
             routerLink: ['/clientes'],
             badge: 'NEW',
           },

@@ -1,1 +1,67 @@
-<p>listCuenta works!</p>,
+<div class="grid">
+  <div class="col-12">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="text-500">Transacciones</h5>
+      </div>
+      <div class="table-responsive text-nowrap">
+        <p-table
+          #dt2
+          dataKey="id"
+          [value]="cuentaService.cuentas()"
+          [tableStyle]="{ 'min-width': '50rem' }"
+          [showLoader]="true"
+          [loading]="cuentaService.loading()"
+          [paginator]="true"
+          styleClass="p-datatable-sm"
+          [rows]="12"
+          [globalFilterFields]="['desc']">
+          <ng-template pTemplate="caption">
+            <div class="flex justify-content-end">
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                  placeholder="Término de busqueda"
+                  class="p-inputtext-sm" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="precio">Fecha<p-sortIcon field="precio"></p-sortIcon>
+              </th>
+              <th pSortableColumn="precio">Cliente<p-sortIcon field="cliente"></p-sortIcon>
+              </th>
+              <th pSortableColumn="desc">Transaccion <p-sortIcon field="desc"></p-sortIcon>
+              </th>
+              <th pSortableColumn="desc">Tipo de Transaccion <p-sortIcon field="desc"></p-sortIcon>
+              </th>
+              <th pSortableColumn="valor">Tipo Cuenta<p-sortIcon field="valor"></p-sortIcon>
+              </th>
+              <th pSortableColumn="valor" style="width: 80px;">Monto<p-sortIcon field="valor"></p-sortIcon></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-cuenta>
+            <tr>
+              <td>{{ cuenta.fecha | date:'shortDate' }}</td>
+              <td>{{ cuenta.cliente.nombre }}</td>
+              <td>{{ cuenta.desc }}</td>
+              <td>{{ cuenta.tipoTransac.desc }}</td>
+              <td>{{ cuenta.tipoCuenta.desc }} ( {{cuenta.banco.banco }}) </td>
+              <td class="text-right">{{ cuenta.monto }} {{ cuenta.moneda.simbolo }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5" class="text-center"> Sin datos para mostrar.</td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

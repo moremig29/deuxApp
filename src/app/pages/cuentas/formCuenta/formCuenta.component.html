@@ -1,16 +1,25 @@
 
 <div class="grid mb-2">
   <div class="col-3 md:col-12 lg:col-3">
-    <app-info-cards titulo="Bs. Efectivo"></app-info-cards>
+    <app-info-cards
+      titulo="Bs. Efectivo"
+      [valor]="cuentaService.cuentasByType().bolEfectivo"
+      ></app-info-cards>
   </div>
   <div class="col-3 md:col-12 lg:col-3">
-    <app-info-cards titulo="Bs. Banco"></app-info-cards>
+    <app-info-cards
+      titulo="Bs. Banco"
+      [valor]="cuentaService.cuentasByType().bolbanco"></app-info-cards>
   </div>
   <div class="col-3 md:col-12 lg:col-3">
-    <app-info-cards titulo="$ Efectivo"></app-info-cards>
+    <app-info-cards
+      titulo="$ Efectivo"
+      [valor]="cuentaService.cuentasByType().dolEfectivo"></app-info-cards>
   </div>
   <div class="col-3 md:col-12 lg:col-3">
-    <app-info-cards titulo="$ Banco"></app-info-cards>
+    <app-info-cards
+      titulo="$ Banco"
+      [valor]="cuentaService.cuentasByType().dolBanco"></app-info-cards>
   </div>
 </div>
 
@@ -22,6 +31,34 @@
       </div>
       <div class="card-body">
         <form [formGroup]="registrarCuentaForm" (ngSubmit)="registrarCuenta()">
+          <div class="formgrid grid">
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">Cliente</label>
+              <p-dropdown
+                formControlName="cliente"
+                [options]="clientesService.clientes()"
+                optionLabel="nombre"
+                optionValue="id"
+                placeholder="Seleccione..."
+                class="p-inputtext-sm"
+                styleClass="w-full"
+                >
+              </p-dropdown>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">Pedido</label>
+              <p-dropdown
+                formControlName="pedido"
+                [options]="pedidosService.pedidos()"
+                optionLabel="id"
+                optionValue="id"
+                placeholder="Seleccione..."
+                class="p-inputtext-sm"
+                styleClass="w-full"
+                >
+              </p-dropdown>
+            </div>
+          </div>
           <div class="formgrid grid">
             <div class="field col-2 mb-2">
               <label class="form-label" for="basic-icon-default-fullname">Moneda</label>
@@ -39,7 +76,10 @@
             <div class="field col-2 mb-2">
               <label class="form-label" for="basic-icon-default-fullname">Monto</label>
               <p-inputNumber
-                inputId="integeronly"
+                inputId="minmaxfraction"
+                mode="decimal"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
                 formControlName="monto"
                 class="p-inputtext-sm w-full"
                 styleClass="w-full"
