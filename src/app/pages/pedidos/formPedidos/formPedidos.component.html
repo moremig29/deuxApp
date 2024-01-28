@@ -54,7 +54,7 @@
                 *ngFor="let producto of productoSolicitados().controls; let i=index"
                 [formGroupName]="i">
 
-                <div class="field col-6 mb-2">
+                <div class="field col-4 mb-2">
                   <div class="flex flex-column">
                     <label class="pb-2" for="basic-icon-default-fullname">Producto</label>
                     <p-dropdown
@@ -62,7 +62,7 @@
                       [options]="inventarioService.inventario()"
                       optionLabel="articulo"
                       optionValue="id"
-                      placeholder="Seleccione un cliente"
+                      placeholder="Seleccione un producto"
                       class="p-inputtext-sm"
                       styleClass="w-full"
                       (onChange)="asignarValoresArticulo($event, producto )"
@@ -86,7 +86,7 @@
                     </p-inputNumber>
                   </div>
                 </div>
-                <div class="field col-2 mb-2">
+                <div class="field col-4 mb-2">
                   <label class="form-label" for="basic-icon-default-fullname">Disponible</label>
                   <div class="input-group input-group-merge">
                     <span class="input-group-text"><i
@@ -102,8 +102,8 @@
                 </div>
               </div>
             </div>
-            <div class="field col-12 mb-2">
-              <label class="form-label" for="basic-icon-default-fullname">.</label>
+            <!-- <div class="field col-12 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname"></label>
               <div class="flex justify-content-center">
                 <p-button
                   [outlined]="true"
@@ -116,9 +116,9 @@
                   >
                 </p-button>
               </div>
-            </div>
+            </div> -->
 
-            <div class="field col-6 mb-2">
+            <div class="field col-4 mb-2">
               <label class="form-label" for="basic-icon-default-fullname">Costo Total</label>
               <div class="input-group input-group-merge">
                 <span class="input-group-text"><i class="bx bx-dollar"></i></span>
@@ -135,7 +135,7 @@
                 </p-inputNumber>
               </div>
             </div>
-            <div class="field col-6 mb-2">
+            <div class="field col-4 mb-2">
               <div class="flex flex-column">
                 <label class="pb-2" for="basic-icon-default-fullname">Estatus</label>
                 <p-dropdown
@@ -150,7 +150,7 @@
               </div>
             </div>
             <div class="field col-12 mt-4">
-              <div class="flex justify-content-end gap-2">
+              <div class="flex justify-content-center gap-2">
                 <p-button
                   type="submit"
                   severity="primary"

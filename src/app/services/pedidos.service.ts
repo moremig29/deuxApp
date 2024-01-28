@@ -11,6 +11,8 @@ export class PedidosService {
 
   base_url = this.baseService.base_url
 
+  pedido: any;
+
   #pedidos = signal<PedidoSignal>({
     loading: true,
     pedidos: []
@@ -40,6 +42,25 @@ export class PedidosService {
     return this.http.post(`${this.base_url}/pedido`, pedido, this.baseService.headers)
       .pipe(
         tap( () => this.getPedidos() )
+      )
+  }
+
+  putPedido( pedido: any ){
+    let id = pedido.Id;
+    console.log( id );
+    return
+    return this.http.put(
+      `${this.base_url}/pedido/${id}`, pedido,
+      this.baseService.headers
+    ).pipe(
+      tap( () => this.getPedidos())
+    )
+  }
+
+  deletePedido( id: string ) {
+    return this.http.delete(`${this.base_url}/pedido/${id}`, this.baseService.headers )
+      .pipe(
+        tap(() => this.getPedidos() )
       )
   }
 

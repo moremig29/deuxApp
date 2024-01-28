@@ -49,6 +49,7 @@ export default class FormPedidosComponent {
     private pedidosService: PedidosService
   ) {
     this.addProducto();
+    this.setFormValues();
   }
 
   registrarPedido() {
@@ -86,8 +87,7 @@ export default class FormPedidosComponent {
   asignarValoresArticulo(event: any, producto: any) {
 
     let id = event.value;
-    let item = this.inventarioService.inventario()
-      .find((articulo) => articulo.id === id);
+    let item = this.findItem( id )
 
     if (item) {
       producto.get('disponible')?.setValue(item.cantidad);
@@ -104,4 +104,41 @@ export default class FormPedidosComponent {
     });
     this.registrarPedidoForm.get('total')?.setValue(this.costoTotal);
   }
+
+  findItem( id: string ) {
+    let item = this.inventarioService
+      .inventario()
+      .find((articulo) => articulo.id === id);
+    return item
+  }
+
+  setFormValues() {
+
+    if( !this.pedidosService.pedido ) return
+
+    const value = this.pedidosService.pedido;
+
+    let { id, cliente, estatus, articulos, ...pedido } = value
+
+    let item = this.findItem( articulos[0].articulo._id )
+
+    pedido.articulos = articulos;
+    pedido.articulos = [
+      {
+        disponible: item!.cantidad,
+        precio: item!.producto.precio_venta,
+        articulo: articulos[0].articulo._id,
+        cantidad: articulos[0].cantidad
+      }
+    ]
+
+    pedido.cliente = cliente._id;
+    pedido.estatus = estatus._id;
+    pedido.fechaEntrega = new Date( pedido.fechaEntrega );
+
+    console.log( pedido );
+
+    this.registrarPedidoForm.setValue( pedido );
+  }
+  
 }
