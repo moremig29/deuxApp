@@ -35,7 +35,6 @@ export class InventarioService {
           loading: false,
           inventario: res.inventario
         })
-        console.log( 'end inventario' )
       });
   }
 

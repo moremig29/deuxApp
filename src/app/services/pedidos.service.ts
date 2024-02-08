@@ -45,10 +45,7 @@ export class PedidosService {
       )
   }
 
-  putPedido( pedido: any ){
-    let id = pedido.Id;
-    console.log( id );
-    return
+  putPedido( pedido: any, id: string ){
     return this.http.put(
       `${this.base_url}/pedido/${id}`, pedido,
       this.baseService.headers

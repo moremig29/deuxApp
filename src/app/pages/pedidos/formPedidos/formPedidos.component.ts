@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
-
 import { ClientesService } from '@services/clientes.service';
 import { InventarioService } from '@services/inventario.service';
 import { ListasService } from '@services/listas.service';
@@ -12,6 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-pedidos',
@@ -34,22 +33,33 @@ export default class FormPedidosComponent {
     cliente: ['', [Validators.required]],
     fechaEntrega: ['', [Validators.required]],
     lugarEntrega: [''],
-    articulos: this.fb.array([]),
+    items: this.fb.group({
+      articulo: ['', [Validators.required]],
+      cantidad: [0, [Validators.required]],
+      disponible: [0],
+      precio: [0],
+    }),
     total: [0, [Validators.required]],
     estatus: ['64da567d065a9a2759773307', [Validators.required]],
   });
 
   costoTotal: number = 0;
+  editar: boolean = false;
+  id: string = '';
 
   constructor(
     private fb: FormBuilder,
     public clientesService: ClientesService,
     public inventarioService: InventarioService,
     public listasService: ListasService,
-    private pedidosService: PedidosService
+    private pedidosService: PedidosService,
+    private router: Router
   ) {
-    this.addProducto();
     this.setFormValues();
+  }
+
+  ngOnDestroy(): void {
+    this.pedidosService.pedido = null;
   }
 
   registrarPedido() {
@@ -60,85 +70,74 @@ export default class FormPedidosComponent {
     let data = this.registrarPedidoForm.value;
     data.fechaEntrega = new Date(data.fechaEntrega);
 
-    this.pedidosService
-      .postPedido(this.registrarPedidoForm.value)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+    if (!this.editar) {
+      this.pedidosService
+        .postPedido(this.registrarPedidoForm.value)
+        .subscribe((res: any) => {
+          console.log(res);
+        });
+    } else {
+      this.pedidosService
+        .putPedido(this.registrarPedidoForm.value, this.id)
+        .subscribe((res: any) => {
+          console.log(res);
+        });
+    }
+    this.router.navigateByUrl('/pedidos');
+
   }
 
-  productoSolicitados(): FormArray {
-    return this.registrarPedidoForm.get('articulos') as FormArray;
-  }
-
-  newProductoSolicitado(): FormGroup {
-    return this.fb.group({
-      articulo: ['', [Validators.required]],
-      cantidad: [0, [Validators.required]],
-      disponible: [0],
-      precio: [0],
-    });
-  }
-
-  addProducto() {
-    this.productoSolicitados().push(this.newProductoSolicitado());
-  }
-
-  asignarValoresArticulo(event: any, producto: any) {
-
+  asignarValoresArticulo(event: any) {
     let id = event.value;
-    let item = this.findItem( id )
+    let item = this.findItem(id);
+
+    console.log( item );
 
     if (item) {
-      producto.get('disponible')?.setValue(item.cantidad);
-      producto.get('precio')?.setValue(item.producto.precio_venta);
+      this.registrarPedidoForm.get(['items', 'disponible'])?.setValue(item.cantidad);
+      this.registrarPedidoForm.get(['items', 'precio'])?.setValue(item.producto.precio_venta);
     }
   }
 
   calcularTotal() {
-    console.log( 'calculando....' )
-    this.costoTotal = 0;
-    let test = this.registrarPedidoForm.get('articulos')?.value;
-    test.forEach((element: any) => {
-      this.costoTotal += element.cantidad * element.precio;
-    });
-    this.registrarPedidoForm.get('total')?.setValue(this.costoTotal);
+
+    let test = this.registrarPedidoForm.get('items')?.value;
+
+    let costoTotal = test.cantidad * test.precio;
+
+    this.registrarPedidoForm.get('total')?.setValue(costoTotal);
   }
 
-  findItem( id: string ) {
+  findItem(id: string) {
     let item = this.inventarioService
       .inventario()
       .find((articulo) => articulo.id === id);
-    return item
+    return item;
   }
 
   setFormValues() {
-
-    if( !this.pedidosService.pedido ) return
+    if (!this.pedidosService.pedido) return;
 
     const value = this.pedidosService.pedido;
 
-    let { id, cliente, estatus, articulos, ...pedido } = value
+    let { id, cliente, estatus, items, ...pedido } = value;
+    this.id = id;
 
-    let item = this.findItem( articulos[0].articulo._id )
+    let item = this.findItem(items.articulo._id);
 
-    pedido.articulos = articulos;
-    pedido.articulos = [
-      {
-        disponible: item!.cantidad,
-        precio: item!.producto.precio_venta,
-        articulo: articulos[0].articulo._id,
-        cantidad: articulos[0].cantidad
-      }
-    ]
+    pedido.items = items;
+    pedido.items = {
+      disponible: item!.cantidad,
+      precio: item!.producto.precio_venta,
+      articulo: items.articulo._id,
+      cantidad: items.cantidad,
+    }
 
     pedido.cliente = cliente._id;
     pedido.estatus = estatus._id;
-    pedido.fechaEntrega = new Date( pedido.fechaEntrega );
+    pedido.fechaEntrega = new Date(pedido.fechaEntrega);
 
-    console.log( pedido );
-
-    this.registrarPedidoForm.setValue( pedido );
+    this.registrarPedidoForm.setValue(pedido);
+    this.editar = true;
   }
-  
 }

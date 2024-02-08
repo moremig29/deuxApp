@@ -48,11 +48,11 @@
               </div>
             </div>
 
-            <div class="field col-12 m-0 p-0" formArrayName="articulos">
+            <div class="field col-12 m-0 p-0">
               <div
+                formGroupName="items"
                 class="formgrid grid m-0 p-0"
-                *ngFor="let producto of productoSolicitados().controls; let i=index"
-                [formGroupName]="i">
+                >
 
                 <div class="field col-4 mb-2">
                   <div class="flex flex-column">
@@ -60,12 +60,12 @@
                     <p-dropdown
                       formControlName="articulo"
                       [options]="inventarioService.inventario()"
-                      optionLabel="articulo"
+                      optionLabel="nombre"
                       optionValue="id"
                       placeholder="Seleccione un producto"
                       class="p-inputtext-sm"
                       styleClass="w-full"
-                      (onChange)="asignarValoresArticulo($event, producto )"
+                      (onChange)="asignarValoresArticulo($event)"
                       >
                     </p-dropdown>
                   </div>
@@ -152,6 +152,7 @@
             <div class="field col-12 mt-4">
               <div class="flex justify-content-center gap-2">
                 <p-button
+                  *ngIf="!editar"
                   type="submit"
                   severity="primary"
                   size="small"
@@ -159,7 +160,8 @@
                   label="Registrar">
                 </p-button>
                 <p-button
-                  type="button"
+                  *ngIf="editar"
+                  type="submit"
                   severity="warning"
                   size="small"
                   icon="pi pi-file-edit"
@@ -181,3 +183,7 @@
     </div>
   </div>
 </div>
+
+<pre>
+  {{ this.registrarPedidoForm.value | json }}
+</pre>
