@@ -1,11 +1,13 @@
-import { Producto } from "./producto.interface";
+import { Categoria } from "./categoria.interface";
 
 export interface Inventario {
-  articulo: string;
-  producto: Producto;
-  cantidad: number;
-  fecha_compra: Date;
-  id? : string;
+  categoria: Categoria;
+  concepto: string;
+  inicial: number;
+  ventas: number;
+  compras: number;
+  final: number;
+  id?: string;
 }
 
 export interface InventarioSignal {

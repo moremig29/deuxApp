@@ -94,8 +94,8 @@ export default class FormPedidosComponent {
     console.log( item );
 
     if (item) {
-      this.registrarPedidoForm.get(['items', 'disponible'])?.setValue(item.cantidad);
-      this.registrarPedidoForm.get(['items', 'precio'])?.setValue(item.producto.precio_venta);
+      this.registrarPedidoForm.get(['items', 'disponible'])?.setValue(item.final);
+      this.registrarPedidoForm.get(['items', 'precio'])?.setValue(0);
     }
   }
 
@@ -127,8 +127,8 @@ export default class FormPedidosComponent {
 
     pedido.items = items;
     pedido.items = {
-      disponible: item!.cantidad,
-      precio: item!.producto.precio_venta,
+      disponible: item!.final,
+      precio: 0,//item!.producto.precio_venta,
       articulo: items.articulo._id,
       cantidad: items.cantidad,
     }

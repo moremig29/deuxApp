@@ -5,10 +5,15 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: LayoutComponent,
     canActivate: [authGuard],
     children: [
+      {
+        path: '',
+        loadComponent: () => import('./pages/dashboard/dashboard/dashboard.component'),
+        data: { titulo: 'precios' },
+      },
       {
         path: 'precios',
         loadComponent: () => import('./pages/prices/prices.component'),

@@ -20,6 +20,9 @@ export class InventarioService {
   inventario = computed( () => this.#inventario().inventario );
   loading = computed( () => this.#inventario().loading );
 
+  #lowInventario = signal([]);
+  lowInventory = computed(()=>this.#lowInventario());
+
   constructor(
     private http: HttpClient,
     private pricesService: PricesService,
@@ -67,6 +70,13 @@ export class InventarioService {
           this.pricesService.getPrecios()
         } )
       )
+  }
+
+  getLowINventario(){
+        return this.http.get<Inventario[]>(`${this.base_url}/inventario/lowInventario`, this.baseService.headers )
+      .subscribe( (res: any ) => {
+        this.#lowInventario.set(res.inventario);
+      });
   }
 
 }

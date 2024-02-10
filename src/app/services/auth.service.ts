@@ -43,7 +43,7 @@ export class AuthService {
       )
       .subscribe({
         next: (res: any) => {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/dashboard');
         },
         error: (err) => {
           console.log( err );

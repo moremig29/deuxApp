@@ -1,18 +1,18 @@
-import { Injectable, OnInit, computed, signal } from '@angular/core';
-import { BaseService } from './base.service';
+import { Injectable, computed, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { BaseService } from './base.service';
 import { Banco, Estatus, Moneda, TipoDeCuenta, TipoDeTransaccion } from '@interfaces/listas.interface';
+import { Categoria } from '@interfaces/categoria.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ListasService implements OnInit {
-
+export class ListasService {
   base_url: string = this.baseService.base_url;
 
   #estatus = signal<Estatus[]>([]);
-  estatus = computed( () => this.#estatus() );
+  estatus = computed(() => this.#estatus());
   #tipoTransac = signal<TipoDeTransaccion[]>([]);
   tipoTransac = computed(() => this.#tipoTransac());
   #tipoCuenta = signal<TipoDeCuenta[]>([]);
@@ -23,6 +23,8 @@ export class ListasService implements OnInit {
   monedas = computed(() => this.#monedas());
   #bancos = signal<Banco[]>([]);
   bancos = computed(() => this.#bancos());
+  #categorias = signal<Categoria[]>([]);
+  categorias = computed(() => this.#categorias());
 
   constructor(private http: HttpClient, private baseService: BaseService) {
     this.getEstatus();
@@ -31,44 +33,48 @@ export class ListasService implements OnInit {
     this.getTipoCambio();
     this.getMoneda();
     this.getBancos();
+    this.getCategorias();
   }
 
-  ngOnInit(): void {
-
-  }
-
-  getEstatus(){
-    return this.http.get(`${this.base_url}/estatus`, this.baseService.headers)
-      .subscribe( ( res: any ) => {
-        this.#estatus.set( res.estatus );
-      } )
+  getEstatus() {
+    return this.http
+      .get(`${this.base_url}/estatus`, this.baseService.headers)
+      .subscribe((res: any) => {
+        this.#estatus.set(res.estatus);
+      });
   }
 
   getTipoTransac() {
-    return this.http.get(`${this.base_url}/tipoTransac`, this.baseService.headers )
-      .subscribe( (res: any ) => {
-        this.#tipoTransac.set( res.TipoTransac )
-      })
+    return this.http
+      .get(`${this.base_url}/tipoTransac`, this.baseService.headers)
+      .subscribe((res: any) => {
+        this.#tipoTransac.set(res.TipoTransac);
+      });
   }
 
   getTipoCuenta() {
-    return this.http.get(`${this.base_url}/tipoCuenta`, this.baseService.headers )
-      .subscribe( (res: any ) => {
-        this.#tipoCuenta.set( res.tipoCuenta )
-      })
+    return this.http
+      .get(`${this.base_url}/tipoCuenta`, this.baseService.headers)
+      .subscribe((res: any) => {
+        this.#tipoCuenta.set(res.tipoCuenta);
+      });
   }
 
   getTipoCambio() {
-    return this.http.get(`${this.base_url}/tipoCambio`, this.baseService.headers )
-      .subscribe( (res:any)=> {
-        this.#tipoCambio.set( res.tipoCambio.TipoCambio );
-      })
-
+    return this.http
+      .get(`${this.base_url}/tipoCambio`, this.baseService.headers)
+      .subscribe((res: any) => {
+        this.#tipoCambio.set(res.tipoCambio.TipoCambio);
+      });
   }
 
   postTipoCambio(tipoCambio: any) {
     return this.http
-      .post(`${this.base_url}/tipoCambio`, { TipoCambio: tipoCambio }, this.baseService.headers)
+      .post(
+        `${this.base_url}/tipoCambio`,
+        { TipoCambio: tipoCambio },
+        this.baseService.headers
+      )
       .pipe(
         map((resp: any) => {
           return resp.tipoCambio.TipoCambio;
@@ -76,18 +82,27 @@ export class ListasService implements OnInit {
       );
   }
 
-  getMoneda(){
-    return this.http.get(`${this.base_url}/moneda`, this.baseService.headers )
-      .subscribe( (res: any ) => {
-        this.#monedas.set( res.moneda )
-      })
+  getMoneda() {
+    return this.http
+      .get(`${this.base_url}/moneda`, this.baseService.headers)
+      .subscribe((res: any) => {
+        this.#monedas.set(res.moneda);
+      });
   }
 
-  getBancos(){
-    return this.http.get( `${this.base_url}/banco`, this.baseService.headers )
-      .subscribe( (res: any ) => {
-        this.#bancos.set( res.bancos );
-      })
+  getBancos() {
+    return this.http
+      .get(`${this.base_url}/banco`, this.baseService.headers)
+      .subscribe((res: any) => {
+        this.#bancos.set(res.bancos);
+      });
   }
 
+  getCategorias() {
+    return this.http
+      .get(`${this.base_url}/categoria`, this.baseService.headers)
+      .subscribe((res: any) => {
+        this.#categorias.set(res.categoria);
+      });
+  }
 }

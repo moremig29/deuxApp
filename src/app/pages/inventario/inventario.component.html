@@ -8,48 +8,70 @@
       <div class="card-body">
         <form [formGroup]="formInventario">
           <div class="formgrid grid">
-            <div class="field col-6 mb-2">
-              <label class="form-label" for="basic-icon-default-fullname">Articulo</label>
-              <div class="input-group input-group-merge">
-                <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-edit-alt"></i></span>
-                <input
-                  type="text"
-                  pInputText
-                  class="p-inputtext-sm w-full"
-                  formControlName="articulo">
-              </div>
-            </div>
-            <div class="field col-6 mb-2">
-              <label class="form-label" for="basic-icon-default-email">Producto</label>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-email">Categoria</label>
               <p-dropdown
-                formControlName="producto"
-                [options]="productoService.productos()"
+                formControlName="categoria"
+                [options]="listasService.categorias()"
                 optionLabel="nombre"
                 optionValue="id"
-                placeholder="Seleccione un producto"
+                placeholder="Seleccione una categoria"
                 class="p-inputtext-sm"
                 styleClass="w-full"
                 >
               </p-dropdown>
             </div>
-            <div class="field col-6 mb-2">
-              <label class="form-label" for="basic-icon-default-phone">Cantidad</label>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">Concepto</label>
+              <div class="input-group input-group-merge">
+                <input
+                  type="text"
+                  pInputText
+                  class="p-inputtext-sm w-full"
+                  formControlName="concepto">
+              </div>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-phone">Inventario Inicial</label>
               <p-inputNumber
                 inputId="integeronly"
-                formControlName="cantidad"
+                formControlName="inicial"
                 class="p-inputtext-sm w-full"
                 styleClass="w-full"
+                (onInput)="calcularFinal()"
                 >
               </p-inputNumber>
             </div>
-            <div class="field col-6 mb-2">
-              <label class="form-label" for="basic-icon-default-phone">Fecha</label>
-              <p-calendar
-                formControlName="fecha_compra"
-                class="p-inputtext-sm"
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-phone">Ventas</label>
+              <p-inputNumber
+                inputId="integeronly"
+                formControlName="ventas"
+                class="p-inputtext-sm w-full"
                 styleClass="w-full"
+                (onInput)="calcularFinal()"
                 >
-              </p-calendar>
+              </p-inputNumber>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-phone">Compras</label>
+              <p-inputNumber
+                inputId="integeronly"
+                formControlName="compras"
+                class="p-inputtext-sm w-full"
+                styleClass="w-full"
+                (onInput)="calcularFinal()">
+              </p-inputNumber>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-phone">Final</label>
+              <p-inputNumber
+                inputId="integeronly"
+                formControlName="final"
+                class="p-inputtext-sm w-full"
+                styleClass="w-full"
+                [readonly]="true">
+              </p-inputNumber>
             </div>
             <div class="col-12 mb-1 mt-1">
               <div class="flex justify-content-end gap-2">
@@ -118,27 +140,35 @@
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="articulo" style="width:30%">
-                  Articulo <p-sortIcon field="articulo"></p-sortIcon>
+                <th pSortableColumn="categoria.nombre">
+                  Categoría <p-sortIcon field="categoria.nombre"></p-sortIcon>
                 </th>
-                <th pSortableColumn="cantidad" style="width:10%">
-                  Cantidad<p-sortIcon field="cantidad"></p-sortIcon>
+                <th pSortableColumn="concepto">
+                  Concepto<p-sortIcon field="concepto"></p-sortIcon>
                 </th>
-                <th pSortableColumn="producto.nombre" style="width:30%">
-                  Producto <p-sortIcon field="producto.nombre"></p-sortIcon>
+                <th pSortableColumn="inicial" style="width: 10%;">
+                  Inventario inicial <p-sortIcon field="inicial"></p-sortIcon>
                 </th>
-                <th pSortableColumn="fecha_compra" style="width:20%">
-                  Fecha de compra <p-sortIcon field="fecha_compra"></p-sortIcon>
+                <th pSortableColumn="ventas" style="width: 10%;">
+                  Ventas <p-sortIcon field="ventas"></p-sortIcon>
+                </th>
+                <th pSortableColumn="compras" style="width: 10%;">
+                  Compras <p-sortIcon field="compras"></p-sortIcon>
+                </th>
+                <th pSortableColumn="final" style="width: 10%;">
+                  Inventario Final <p-sortIcon field="final"></p-sortIcon>
                 </th>
                 <th style="width:10%">Accion</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-inventario>
               <tr>
-                <td>{{ inventario.nombre }}</td>
-                <td>{{ inventario.cantidad }}</td>
-                <td>{{ inventario.producto.nombre }}</td>
-                <td>{{ inventario.fecha_compra | date:'short' }}</td>
+                <td>{{ inventario.categoria.nombre }}</td>
+                <td>{{ inventario.concepto }}</td>
+                <td>{{ inventario.inicial }}</td>
+                <td>{{ inventario.ventas }}</td>
+                <td>{{ inventario.compras }}</td>
+                <td>{{ inventario.final }}</td>
                 <td>
                   <div class="flex gap-2">
                     <i class='pi pi-file-edit text-primary pointer' (click)="setInventarioEditar( inventario )"></i>
