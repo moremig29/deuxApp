@@ -7,49 +7,80 @@
       </div>
       <div class="card-body">
         <form [formGroup]="formInsumos">
-          <div class="formgrid grid">
-            <div class="field  col-6 mb-2">
-              <label class="form-label" for="basic-icon-default-fullname">Descripción</label>
+          <div class="formgrid grid mt-3">
+            <div class="field col-6 mb-2">
+              <label class="form-label" for="basic-icon-default-email">
+                Categoria <span class="text-red-400">*</span>
+              </label>
+              <p-dropdown
+                formControlName="categoria"
+                [options]="listasService.categorias()"
+                optionLabel="nombre"
+                optionValue="id"
+                placeholder="Seleccione una categoria"
+                class="p-inputtext-sm"
+                styleClass="w-full">
+              </p-dropdown>
+            </div>
+            <div class="field col-6 mb-2">
+              <label class="form-label" for="basic-icon-default-fullname">
+                Nombre <span class="text-red-400">*</span>
+              </label>
               <div class="input-group input-group-merge">
                 <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-edit-alt"></i></span>
                 <input
                   type="text"
                   pInputText
                   class="p-inputtext-sm w-full"
-                  formControlName="desc">
+                  placeholder="Taza ceramica 11oz"
+                  formControlName="nombre">
               </div>
             </div>
-            <div class="field col-6 mb-2">
-              <label class="form-label" for="basic-icon-default-email">Precio De Compra</label>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-email">Costo Compra</label>
               <p-inputNumber
                 inputId="integeronly"
-                formControlName="precio"
+                formControlName="costoCompra"
+                class="p-inputtext-sm w-full"
+                styleClass="w-full"
+                (onInput)="calcularCostoUnidad()"
+                >
+              </p-inputNumber>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-email">Unidades Compra</label>
+              <p-inputNumber
+                inputId="integeronly"
+                formControlName="unidadesCompra"
+                class="p-inputtext-sm w-full"
+                styleClass="w-full"
+                (onInput)="calcularCostoUnidad()">
+              </p-inputNumber>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-phone">
+                Costo Unidad <span class="text-red-400">*</span>
+              </label>
+              <p-inputNumber
+                inputId="integeronly"
+                formControlName="costoUnidad"
                 class="p-inputtext-sm w-full"
                 styleClass="w-full"
                 >
               </p-inputNumber>
             </div>
-            <div class="field col-6 mb-2">
-              <label class="form-label" for="basic-icon-default-phone">Valor Uso</label>
-              <p-inputNumber
-                inputId="integeronly"
-                formControlName="valor"
-                class="p-inputtext-sm w-full"
-                styleClass="w-full"
-                >
-              </p-inputNumber>
-            </div>
-            <div class="field col-6 mb-2">
+            <div class="field col-12 mb-2 text-right">
               <label class="form-label" for="basic-icon-default-phone">Acciones</label>
-              <div class="flex gap-2">
+              <div class="flex gap-2 justify-content-end">
                 <p-button
                   type="submit"
                   severity="primary"
                   label="Registrar"
                   size="small"
                   icon="pi pi-plus"
-                  (click)="editar = false; registrarInsumo()"
-                  [disabled]="!formInsumos.valid">
+                  (click)="registrarInsumo()"
+                  [disabled]="!formInsumos.valid"
+                  [hidden]="editar">
                 </p-button>
                 <p-button
                   type="submit"
@@ -58,8 +89,9 @@
                   severity="warning"
                   size="small"
                   icon="pi pi-file-edit"
-                  (click)="editar = true; registrarInsumo()"
-                  [disabled]="!formInsumos.valid">
+                  (click)="registrarInsumo()"
+                  [disabled]="!formInsumos.valid"
+                  [hidden]="!editar" >
                 </p-button>
                 <p-button
                   type="submit"
@@ -100,20 +132,33 @@
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="desc" style="width:50%">Descripcion <p-sortIcon field="desc"></p-sortIcon>
+                <th pSortableColumn="categoria.nombre" style="width:20%">
+                  Categoría
+                  <p-sortIcon field="categoria.nombre"></p-sortIcon>
                 </th>
-                <th pSortableColumn="precio" style="width:20%">Precio compra <p-sortIcon field="precio"></p-sortIcon>
+                <th pSortableColumn="nombre">
+                  Descripcion
+                  <p-sortIcon field="nombre"></p-sortIcon>
                 </th>
-                <th pSortableColumn="valor" style="width:15%">Valor Uso<p-sortIcon field="valor"></p-sortIcon>
+                <th pSortableColumn="costoCompra" style="width:15%"  class="text-center">
+                  Costo compra
+                  <p-sortIcon field="costoCompra"></p-sortIcon>
                 </th>
-                <th style="width:15%">Accion</th>
+                <th pSortableColumn="costoUnidad" style="width:15%" class="text-center">
+                  Costo Unidad
+                  <p-sortIcon field="costoUnidad"></p-sortIcon>
+                </th>
+                <th style="width:10%">
+                  Accion
+                </th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-insumo>
               <tr>
-                <td>{{ insumo.desc }}</td>
-                <td>{{ insumo.precio }}</td>
-                <td>{{ insumo.valor }}</td>
+                <td>{{ insumo.categoria.nombre }}</td>
+                <td>{{ insumo.nombre }}</td>
+                <td class="text-center">{{ insumo.costoCompra }}</td>
+                <td  class="text-center">{{ insumo.costoUnidad }}</td>
                 <td>
                   <div class="flex gap-2">
                     <i class='pi pi-file-edit text-primary pointer' (click)="setInsumoEditar( insumo )"></i>
@@ -127,5 +172,5 @@
       </div>
     </div>
   </div>
-
+<p-toast  position="bottom-center"></p-toast>
 </div>

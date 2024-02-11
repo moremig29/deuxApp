@@ -9,6 +9,10 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ListasService } from '@services/listas.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-insumos',
@@ -20,27 +24,43 @@ import { InputNumberModule } from 'primeng/inputnumber';
     InputNumberModule,
     InputTextModule,
     TableModule,
+    DropdownModule,
+    ToastModule,
   ],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService]
 })
 export default class InsumosComponent {
-
   public formInsumos: FormGroup = this.fb.group({
-    desc: ['', Validators.required],
-    precio: [0, Validators.required],
-    valor: [0, Validators.required],
-    id: [0, []],
+    categoria: ['', Validators.required],
+    nombre: ['', Validators.required],
+    unidadesCompra: [0],
+    costoCompra: [0],
+    costoUnidad: [0, Validators.required],
+    id: ['', []],
   });
 
   editar: boolean = false;
 
-  constructor(private fb: FormBuilder, public insumosService: InsumosService) {}
+  constructor(
+    private fb: FormBuilder,
+    public insumosService: InsumosService,
+    public listasService: ListasService,
+    private ms: MessageService
+  ) {}
 
   setInsumoEditar(insumo: any) {
     this.editar = true;
-    this.formInsumos.setValue(insumo);
+    this.formInsumos.setValue({
+      categoria: insumo.categoria._id,
+      nombre: insumo.nombre,
+      unidadesCompra: insumo.unidadesCompra,
+      costoCompra: insumo.costoCompra,
+      costoUnidad: insumo.costoUnidad,
+      id: insumo.id
+    });
   }
 
   cancelarEdicion() {
@@ -50,10 +70,12 @@ export default class InsumosComponent {
 
   resetForm() {
     this.formInsumos.setValue({
-      desc: '',
-      precio: 0,
-      valor: 0,
-      id: 0,
+      categoria: '',
+      nombre: '',
+      unidadesCompra: 0,
+      costoCompra: 0,
+      costoUnidad: 0,
+      id: ''
     });
   }
 
@@ -90,12 +112,37 @@ export default class InsumosComponent {
   createInsumo() {
     this.insumosService
       .postInsumo(this.formInsumos.value)
-      .subscribe((res) => {});
+      .subscribe((res: any) => {
+        console.log(res)
+        this.ms.add({
+          severity: 'success',
+          summary: 'Actualizado',
+          detail: `Se ha registrado el insumo ${res.data.nombre}  correctamente`,
+        });
+      });
   }
 
   updateInsumo() {
-    this.insumosService
-      .putInsumo(this.formInsumos.value)
-      .subscribe((res) => {});
+    this.insumosService.putInsumo(this.formInsumos.value)
+      .subscribe((res: any) => {
+        this.editar = false;
+        console.log(res)
+        this.ms.add({
+          severity: 'success',
+          summary: 'Actualizado',
+          detail: `Se ha actualizado el insumo ${res.data.nombre}  correctamente`,
+        });
+      });
+  }
+
+  calcularCostoUnidad(){
+    console.log('calculando...')
+    let costoCompra = this.formInsumos.get('costoCompra')?.value
+    let unidadesCompra = this.formInsumos.get('unidadesCompra')?.value
+
+    if ( costoCompra && unidadesCompra ) {
+      let costoUnidad = costoCompra / unidadesCompra
+      this.formInsumos.get('costoUnidad')?.setValue(costoUnidad)
+    }
   }
 }

@@ -31,7 +31,7 @@ export class InsumosService {
       .subscribe( (res: any ) => {
         this.#insumos.set({
           loading: false,
-          insumos: res.insumo
+          insumos: res.data
         })
       } )
   }
