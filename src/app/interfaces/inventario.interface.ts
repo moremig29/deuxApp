@@ -1,8 +1,9 @@
 import { Categoria } from "./categoria.interface";
+import { Insumo } from "./insumo.interface";
 
 export interface Inventario {
-  categoria: Categoria;
-  concepto: string;
+  insumo: Insumo;
+  fecha: Date;
   inicial: number;
   ventas: number;
   compras: number;

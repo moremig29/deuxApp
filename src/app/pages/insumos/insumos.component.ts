@@ -82,7 +82,7 @@ export default class InsumosComponent {
   eliminarInsumo(insumo: Insumo) {
     Swal.fire({
       title: 'Estás seguro de borrar',
-      text: insumo.desc,
+      text: insumo.nombre,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, Borralo!',

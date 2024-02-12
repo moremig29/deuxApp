@@ -1,6 +1,7 @@
 export interface Insumo {
-  desc: string,
+  nombre: string,
   precio: number,
   valor: number,
   id?: string
+  _id?: string
 }

@@ -1,14 +1,14 @@
 <div class="grid">
 
   <div class="col-12">
-    <div class="card mb-2">
+    <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
         <small class="text-muted float-end">Registro de Insumos</small>
       </div>
       <div class="card-body">
         <form [formGroup]="formInsumos">
           <div class="formgrid grid mt-3">
-            <div class="field col-6 mb-2">
+            <div class="field col-4 mb-2">
               <label class="form-label" for="basic-icon-default-email">
                 Categoria <span class="text-red-400">*</span>
               </label>
@@ -22,7 +22,7 @@
                 styleClass="w-full">
               </p-dropdown>
             </div>
-            <div class="field col-6 mb-2">
+            <div class="field col-4 mb-2">
               <label class="form-label" for="basic-icon-default-fullname">
                 Nombre <span class="text-red-400">*</span>
               </label>
@@ -35,6 +35,18 @@
                   placeholder="Taza ceramica 11oz"
                   formControlName="nombre">
               </div>
+            </div>
+            <div class="field col-4 mb-2">
+              <label class="form-label" for="basic-icon-default-phone">
+                Costo Unidad <span class="text-red-400">*</span>
+              </label>
+              <p-inputNumber
+                inputId="integeronly"
+                formControlName="costoUnidad"
+                class="p-inputtext-sm w-full"
+                styleClass="w-full"
+                >
+              </p-inputNumber>
             </div>
             <div class="field col-4 mb-2">
               <label class="form-label" for="basic-icon-default-email">Costo Compra</label>
@@ -58,18 +70,6 @@
               </p-inputNumber>
             </div>
             <div class="field col-4 mb-2">
-              <label class="form-label" for="basic-icon-default-phone">
-                Costo Unidad <span class="text-red-400">*</span>
-              </label>
-              <p-inputNumber
-                inputId="integeronly"
-                formControlName="costoUnidad"
-                class="p-inputtext-sm w-full"
-                styleClass="w-full"
-                >
-              </p-inputNumber>
-            </div>
-            <div class="field col-12 mb-2 text-right">
               <label class="form-label" for="basic-icon-default-phone">Acciones</label>
               <div class="flex gap-2 justify-content-end">
                 <p-button
@@ -172,5 +172,5 @@
       </div>
     </div>
   </div>
-<p-toast  position="bottom-center"></p-toast>
+<p-toast></p-toast>
 </div>

@@ -36,7 +36,7 @@ export class InventarioService {
       .subscribe( (res: any ) => {
         this.#inventario.set({
           loading: false,
-          inventario: res.inventario
+          inventario: res.data
         })
       });
   }
@@ -75,7 +75,7 @@ export class InventarioService {
   getLowINventario(){
         return this.http.get<Inventario[]>(`${this.base_url}/inventario/lowInventario`, this.baseService.headers )
       .subscribe( (res: any ) => {
-        this.#lowInventario.set(res.inventario);
+        this.#lowInventario.set(res.data);
       });
   }
 

@@ -5,12 +5,12 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
     children: [
       {
-        path: '',
+        path: 'dashboard',
         loadComponent: () => import('./pages/dashboard/dashboard/dashboard.component'),
         data: { titulo: 'precios' },
       },
@@ -88,6 +88,11 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      }
     ],
   },
   {

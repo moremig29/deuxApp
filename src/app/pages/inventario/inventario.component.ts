@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { InventarioService } from '../../services/inventario.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { Inventario } from '@interfaces/inventario.interface';
@@ -11,7 +11,10 @@ import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
-import { ListasService } from '@services/listas.service';
+import { InsumosService } from '@services/insumos.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { InventarioByMesPipe } from '../../pipes/inventario-by-mes.pipe';
 
 @Component({
   selector: 'app-inventario',
@@ -25,21 +28,27 @@ import { ListasService } from '@services/listas.service';
     InputNumberModule,
     CalendarModule,
     DropdownModule,
+    ToastModule,
+    FormsModule,
+    InventarioByMesPipe
   ],
   templateUrl: './inventario.component.html',
   styleUrl: './inventario.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MessageService],
 })
 export default class InventarioComponent {
+  today: Date = new Date();
+  currentMonth: Date;
 
   public formInventario: FormGroup = this.fb.group({
-    categoria: ['', Validators.required],
-    concepto: [''],
+    insumo: ['', Validators.required],
     inicial: [0, Validators.required],
-    ventas: [0, Validators.required],
-    compras: [0, Validators.required],
+    ventas: [0],
+    compras: [0],
     final: [0, Validators.required],
-    id: []
+    fecha: [this.today, Validators.required],
+    id: [],
   });
 
   editar: boolean = false;
@@ -47,19 +56,21 @@ export default class InventarioComponent {
   constructor(
     public inventarioService: InventarioService,
     private fb: FormBuilder,
-    public listasService: ListasService
+    public insumosService: InsumosService,
+    private ms: MessageService
   ) {
-
+    this.currentMonth = new Date();
   }
 
   resetFormulario() {
     this.formInventario.reset({
-      articulo: '',
-      concepto: '',
+      insumo: '',
       inicial: 0,
       ventas: 0,
       compras: 0,
       final: 0,
+      fecha: this.today,
+      id: '',
     });
   }
 
@@ -76,17 +87,25 @@ export default class InventarioComponent {
   createInventario() {
     this.inventarioService
       .postInventario(this.formInventario.value)
-      .subscribe((res) => {
-        console.log(res);
+      .subscribe((res: any) => {
+        this.ms.add({
+          severity: 'success',
+          summary: 'Registrado',
+          detail: `Se ha guardo el inventario del insumo ${res.data.insumo.nombre}  correctamente`,
+        });
       });
   }
 
   editInventario() {
     this.inventarioService
       .putInventario(this.formInventario.value)
-      .subscribe((res) => {
-        console.log(res);
+      .subscribe((res: any) => {
         this.editar = false;
+        this.ms.add({
+          severity: 'success',
+          summary: 'Actualizado',
+          detail: `Se ha guardo el inventario del insumo ${res.data.insumo.nombre}  correctamente`,
+        });
       });
   }
 
@@ -98,13 +117,21 @@ export default class InventarioComponent {
 
   setInventarioEditar(inventario: Inventario) {
     this.editar = true;
-    this.formInventario.setValue(inventario);
+    this.formInventario.setValue({
+      insumo: inventario.insumo._id,
+      inicial: inventario.inicial,
+      ventas: inventario.ventas,
+      compras: inventario.compras,
+      final: inventario.final,
+      fecha: new Date(inventario.fecha),
+      id: inventario.id,
+    });
   }
 
   eliminarInventario(inventario: Inventario) {
     Swal.fire({
       title: 'Estás seguro de borrar',
-      text: inventario.concepto,
+      text: inventario.insumo.nombre,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, Borralo!',
@@ -117,7 +144,7 @@ export default class InventarioComponent {
     });
   }
 
-  calcularFinal(){
+  calcularFinal() {
     let { inicial, compras, ventas } = this.formInventario.value;
     let final = inicial + compras - ventas;
     this.formInventario.get('final')!.setValue(final);

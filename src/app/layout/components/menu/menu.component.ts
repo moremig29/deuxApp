@@ -38,13 +38,13 @@ export class MenuComponent {
           {
             label: 'Precios',
             icon: 'pi pi-fw pi-tag',
-            routerLink: ['/dashboard/precios'],
+            routerLink: ['/precios'],
             badge: 'NEW',
           },
           {
             label: 'Inventario',
             icon: 'pi pi-fw pi-list',
-            routerLink: ['/dashboard/inventario'],
+            routerLink: ['/inventario'],
             badge: 'NEW',
           },
           {
@@ -54,19 +54,19 @@ export class MenuComponent {
               {
                 label: 'Consolidado',
                 icon: 'pi pi-fw pi-list',
-                routerLink: ['/dashboard/cuenta'],
+                routerLink: ['/cuenta'],
               },
               {
                 label: 'Registrar',
                 icon: 'pi pi-fw pi-sign-in',
-                routerLink: ['/dashboard/cuenta/registrar'],
+                routerLink: ['/cuenta/registrar'],
               },
             ],
           },
           {
             label: 'Insumos',
             icon: 'pi pi-fw pi-box',
-            routerLink: ['/dashboard/insumos'],
+            routerLink: ['/insumos'],
             badge: 'NEW',
           },
           {
@@ -76,12 +76,12 @@ export class MenuComponent {
               {
                 label: 'Lista',
                 icon: 'pi pi-fw pi-list',
-                routerLink: ['/dashboard/productos'],
+                routerLink: ['/productos'],
               },
               {
                 label: 'Configurar',
                 icon: 'pi pi-fw pi-sign-in',
-                routerLink: ['/dashboard/productos/configurar'],
+                routerLink: ['/productos/configurar'],
               },
             ],
           },
@@ -92,19 +92,19 @@ export class MenuComponent {
               {
                 label: 'Lista',
                 icon: 'pi pi-fw pi-list',
-                routerLink: ['/dashboard/pedidos'],
+                routerLink: ['/pedidos'],
               },
               {
                 label: 'Registrar',
                 icon: 'pi pi-fw pi-sign-in',
-                routerLink: ['/dashboard/pedidos/registrar'],
+                routerLink: ['/pedidos/registrar'],
               },
             ],
           },
           {
             label: 'Clientes',
             icon: 'pi pi-fw pi-users',
-            routerLink: ['/dashboard/clientes'],
+            routerLink: ['/clientes'],
             badge: 'NEW',
           },
         ],
@@ -119,7 +119,7 @@ export class MenuComponent {
               {
                 label: 'Proximamente',
                 icon: 'pi pi-fw pi-sign-in',
-                routerLink: ['/dashboard/sm-1'],
+                routerLink: ['/sm-1'],
               },
               /* {
                 label: 'Registrar',
