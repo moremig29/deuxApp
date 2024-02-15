@@ -3,6 +3,7 @@ import { Injectable, computed, signal } from '@angular/core';
 import { BaseService } from './base.service';
 import { Producto, ProductoSignal } from '@interfaces/producto.interface';
 import { tap } from 'rxjs';
+import { InsumosService } from './insumos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ProductosService {
   productos = computed( () => this.#producto().productos );
   loading = computed( () => this.#producto().loading )
 
-  constructor( private http: HttpClient, private baseService: BaseService ) {
+  constructor( private http: HttpClient, private baseService: BaseService, private insumosService: InsumosService ) {
     this.getProductos();
   }
 
@@ -38,7 +39,10 @@ export class ProductosService {
   postProducto(producto: Producto) {
     return this.http.post(`${this.base_url}/producto`, producto, this.baseService.headers)
       .pipe(
-        tap(() => this.getProductos())
+        tap(() => {
+          this.getProductos()
+          this.insumosService.getInsumos()
+        })
       )
   }
 

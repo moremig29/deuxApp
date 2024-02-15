@@ -45,6 +45,7 @@
                 formControlName="costoUnidad"
                 class="p-inputtext-sm w-full"
                 styleClass="w-full"
+                [minFractionDigits]="2"
                 >
               </p-inputNumber>
             </div>
@@ -56,6 +57,7 @@
                 class="p-inputtext-sm w-full"
                 styleClass="w-full"
                 (onInput)="calcularCostoUnidad()"
+                [minFractionDigits]="2"
                 >
               </p-inputNumber>
             </div>

@@ -18,17 +18,17 @@
               [showSourceControls]="false"
               [targetStyle]="{ height: '20rem' }"
               [showTargetControls]="false"
-              (onMoveToTarget)="calcularCosto()"
-              (onMoveToSource)="calcularCosto()"
-              filterBy="desc"
+              (onMoveToTarget)="calcularCosto($event)"
+              (onMoveToSource)="calcularCosto($event)"
+              filterBy="nombre"
               sourceFilterPlaceholder="Buscar por nombre"
               targetFilterPlaceholder="Buscar por nombre"
               breakpoint="1400px">
               <ng-template let-product pTemplate="item">
                 <div class="flex justify-content-between gap-2">
-                  <span class="font-bold">{{ product.desc }}</span>
+                  <span class="font-bold">{{ product.nombre }}</span>
                   <span class="font-bold text-900">{{
-                    "$" + (product.valor | number : "1.2-2")
+                    "$" + (product.costoUnidad | number : "1.2-2")
                   }}</span>
                 </div>
               </ng-template>
@@ -76,6 +76,7 @@
                   [(ngModel)]="precioAsignado"
                   class="p-inputtext-sm w-full"
                   styleClass="w-full"
+                  [minFractionDigits]="2"
                   [step]="0.1">
                 </p-inputNumber>
                 <!-- <div class="col-6">

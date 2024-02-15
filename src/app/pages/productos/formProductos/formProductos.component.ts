@@ -45,7 +45,6 @@ export default class FormProductosComponent {
   ngOnInit(): void {
     if (this.productosService.producto) {
       this.producto = this.productosService.producto;
-      console.log(this.producto);
       this.cargarConfiguracion();
     }
   }
@@ -54,11 +53,13 @@ export default class FormProductosComponent {
     this.productosService.producto = undefined;
   }
 
-  calcularCosto() {
+  calcularCosto(event: any ) {
+
+    console.log(event)
     this.costoTotal = 0;
 
     this.targetProducts.forEach((element: any) => {
-      this.costoTotal += Number(element.valor);
+      this.costoTotal += Number(element.costoUnidad);
     });
   }
 
@@ -67,7 +68,7 @@ export default class FormProductosComponent {
     this.nombreProducto = this.producto.nombre;
     this.precioAsignado = this.producto.precio_venta;
     this.editar = true;
-    this.calcularCosto();
+    this.calcularCosto(undefined);
   }
 
   registrarProducto() {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -32,7 +32,7 @@ import { MessageService } from 'primeng/api';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [MessageService]
 })
-export default class InsumosComponent {
+export default class InsumosComponent implements OnInit{
   public formInsumos: FormGroup = this.fb.group({
     categoria: ['', Validators.required],
     nombre: ['', Validators.required],
@@ -50,6 +50,12 @@ export default class InsumosComponent {
     public listasService: ListasService,
     private ms: MessageService
   ) {}
+
+  ngOnInit(): void {
+    this.insumosService.getInsumos();
+  }
+
+
 
   setInsumoEditar(insumo: any) {
     this.editar = true;
