@@ -46,7 +46,6 @@ export class AuthService {
           this.router.navigateByUrl('/dashboard');
         },
         error: (err) => {
-          console.log( err );
           this.baseService.displayErrorMessage( err.error );
         },
       });

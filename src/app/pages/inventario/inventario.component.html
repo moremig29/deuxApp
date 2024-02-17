@@ -128,7 +128,7 @@
             [paginator]="true"
             styleClass="p-datatable-sm"
             [rows]="5"
-            [globalFilterFields]="['desc']">
+            [globalFilterFields]="['insumo.nombre']">
             <ng-template pTemplate="caption">
               <div class="flex justify-content-end gap-2">
                 <span class="p-input-icon-left ml-auto">
@@ -136,7 +136,7 @@
                   <input
                     pInputText
                     (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                    placeholder="Search keyword"
+                    placeholder="Insumo..."
                     class="p-inputtext-sm" />
                 </span>
                 <div class="input-group input-group-merge">
