@@ -32,8 +32,8 @@ export default class PricesComponent {
     public listasService: ListasService
   ) {
     this.sortOptions = [
-      { label: 'Precio Mayor a Menor', value: '!producto.precio_venta' },
-      { label: 'Precio Menor a Mayor', value: 'producto.precio_venta' },
+      { label: 'Precio Mayor a Menor', value: '!precio_venta' },
+      { label: 'Precio Menor a Mayor', value: 'precio_venta' },
     ];
   }
 
