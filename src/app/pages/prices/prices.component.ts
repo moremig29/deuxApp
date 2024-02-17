@@ -68,6 +68,9 @@ export default class PricesComponent {
   upgradeTipoCambio() {
 
     if (this.valorDolar === '') return;
-    this.listasService.postTipoCambio(this.valorDolar).subscribe((data) => {});
+    this.listasService.postTipoCambio(this.valorDolar)
+      .subscribe((data) => {
+        this.listasService.getTipoCambio()
+      });
   }
 }
