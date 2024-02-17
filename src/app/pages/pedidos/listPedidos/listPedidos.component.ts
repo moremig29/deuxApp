@@ -47,12 +47,11 @@ export default class ListPedidosComponent {
   }
 
   eliminarPedido(pedido: Pedido) {
-    console.log(pedido);
     this.pedidosService.deletePedido(pedido.id).subscribe();
   }
 
   completarPedido(pedido: any) {
-    // TODO: usar el metodo de editar y enviar el estatus con el valor 65b6a5df1769773db5c7bba1
+    // usar el metodo de editar y enviar el estatus con el valor 65b6a5df1769773db5c7bba1
 
     pedido.estatus = '65b6a5df1769773db5c7bba1';
     pedido.cliente = pedido.cliente._id;
@@ -60,6 +59,6 @@ export default class ListPedidosComponent {
 
     this.pedidosService.putPedido( pedido, pedido.id ).subscribe();
 
-    console.log(pedido);
+
   }
 }

@@ -80,13 +80,11 @@ export default class FormPedidosComponent {
       this.pedidosService
         .postPedido(this.registrarPedidoForm.value)
         .subscribe((res: any) => {
-          console.log(res);
         });
     } else {
       this.pedidosService
         .putPedido(this.registrarPedidoForm.value, this.id)
         .subscribe((res: any) => {
-          console.log(res);
         });
     }
     this.router.navigateByUrl('/pedidos');
@@ -121,7 +119,6 @@ export default class FormPedidosComponent {
   }
 
   findItem(id: string) {
-    console.log( id );
     let item = this.inventarioService
       .inventario()
       .find((articulo) => articulo.insumo._id === id);
@@ -132,8 +129,6 @@ export default class FormPedidosComponent {
     if (!this.pedidosService.pedido) return;
 
     const value = this.pedidosService.pedido;
-
-    console.log( value );
 
     let { id, cliente, estatus, items, ...pedido } = value;
     this.id = id;

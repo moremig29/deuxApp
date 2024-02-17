@@ -55,7 +55,6 @@ export default class FormProductosComponent {
 
   calcularCosto(event: any ) {
 
-    console.log(event)
     this.costoTotal = 0;
 
     this.targetProducts.forEach((element: any) => {

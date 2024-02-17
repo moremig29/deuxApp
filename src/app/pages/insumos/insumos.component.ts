@@ -122,7 +122,6 @@ export default class InsumosComponent implements OnInit {
     this.insumosService
       .postInsumo(this.formInsumos.value)
       .subscribe((res: any) => {
-        console.log(res);
         this.ms.add({
           severity: 'success',
           summary: 'Actualizado',
@@ -136,7 +135,6 @@ export default class InsumosComponent implements OnInit {
       .putInsumo(this.formInsumos.value)
       .subscribe((res: any) => {
         this.editar = false;
-        console.log(res);
         this.ms.add({
           severity: 'success',
           summary: 'Actualizado',
@@ -146,7 +144,6 @@ export default class InsumosComponent implements OnInit {
   }
 
   calcularCostoUnidad() {
-    console.log('calculando...');
     let costoCompra = this.formInsumos.get('costoCompra')?.value;
     let unidadesCompra = this.formInsumos.get('unidadesCompra')?.value;
 

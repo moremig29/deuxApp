@@ -2,6 +2,7 @@ import { Injectable, computed, signal } from '@angular/core';
 import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
 import { Saldo } from '@interfaces/saldo.interface';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class CuentaService {
   dolBanco:    0,
 })
   cuentasByType = computed( () => this.#cuentasByType() );
+  cuenta: any | undefined
 
   loading = computed(() => this.#cuentas().loading);
   cuentas = computed(() => this.#cuentas().cuentas);
@@ -43,7 +45,12 @@ export class CuentaService {
       `${this.base_url}/cuenta`,
       cuenta,
       this.baseService.headers
-    );
+    ). pipe(
+      tap( () => {
+        this.getCuentas();
+        this.getCuentasByType();
+      }
+    ))
   }
 
   getCuentasByType() {
@@ -52,5 +59,23 @@ export class CuentaService {
       .subscribe((res: any) => {
         this.#cuentasByType.set(res.saldos);
       });
+  }
+
+  putCuenta(id: string, cuenta: any) {
+    return this.http
+      .put(`${this.base_url}/cuenta/${id}`, cuenta, this.baseService.headers)
+      .pipe(tap( () => {
+        this.getCuentas()
+        this.getCuentasByType()
+      } ))
+  }
+
+  deleteCuenta(id: string ) {
+    return this.http
+      .delete(`${this.base_url}/cuenta/${id}`, this.baseService.headers)
+      .pipe(tap(() => {
+        this.getCuentas();
+        this.getCuentasByType();
+      }));
   }
 }

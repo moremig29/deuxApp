@@ -42,6 +42,7 @@
               <th pSortableColumn="valor">Tipo Cuenta<p-sortIcon field="valor"></p-sortIcon>
               </th>
               <th pSortableColumn="valor" style="width: 80px;">Monto<p-sortIcon field="valor"></p-sortIcon></th>
+              <th style="width: 8%;">Acciones</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-cuenta>
@@ -52,6 +53,13 @@
               <td>{{ cuenta.tipoTransac.desc }}</td>
               <td>{{ cuenta.tipoCuenta.desc }} ( {{cuenta.banco.banco }}) </td>
               <td class="text-right">{{ cuenta.monto }} {{ cuenta.moneda.simbolo }}</td>
+              <td>
+                <div class="flex gap-2 justify-content-center">
+                  <i class='pi pi-file-edit text-yellow-500 pointer' (click)="editarOperacion( cuenta )"></i>
+                  <i class='pi pi-trash text-red-500 pointer' (click)="eliminarOperacion( cuenta.id )"></i>
+                </div>
+              </td>
+
             </tr>
           </ng-template>
           <ng-template pTemplate="emptymessage">

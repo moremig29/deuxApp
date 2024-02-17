@@ -27,6 +27,10 @@ export default class ListProductosComponent {
     public productoService: ProductosService
   ){}
 
+  ngOnInit(): void {
+    this.productoService.getProductos();
+  }
+
   editarProducto(producto: Producto) {
     this.productoService.producto = producto;
     this.router.navigateByUrl('/productos/configurar');

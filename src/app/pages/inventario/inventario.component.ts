@@ -111,7 +111,7 @@ export default class InventarioComponent {
 
   deleteInventario(id: string) {
     this.inventarioService.deleteInventario(id).subscribe((res) => {
-      console.log(res);
+
     });
   }
 
