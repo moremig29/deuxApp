@@ -22,8 +22,11 @@ export class ProductosService {
   productos = computed( () => this.#producto().productos );
   loading = computed( () => this.#producto().loading )
 
-  constructor( private http: HttpClient, private baseService: BaseService, private insumosService: InsumosService ) {
-    this.getProductos();
+  constructor(
+    private http: HttpClient,
+    private baseService: BaseService,
+    private insumosService: InsumosService
+    ) {
   }
 
   getProductos() {

@@ -1,6 +1,8 @@
+import { Insumo } from "./insumo.interface";
+
 export interface Producto {
   nombre: string,
-  insumos: string[],
+  insumos: any[],
   costo_total: number,
   precio_venta: number,
   img: string;

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { InsumosService } from '@services/insumos.service';
@@ -13,6 +13,7 @@ import { ListasService } from '@services/listas.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-insumos',
@@ -20,25 +21,28 @@ import { MessageService } from 'primeng/api';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     ButtonModule,
     InputNumberModule,
     InputTextModule,
     TableModule,
     DropdownModule,
     ToastModule,
+    CheckboxModule,
   ],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [MessageService]
+  providers: [MessageService],
 })
-export default class InsumosComponent implements OnInit{
+export default class InsumosComponent implements OnInit {
   public formInsumos: FormGroup = this.fb.group({
     categoria: ['', Validators.required],
     nombre: ['', Validators.required],
     unidadesCompra: [0],
     costoCompra: [0],
     costoUnidad: [0, Validators.required],
+    basico: [false, Validators.required],
     id: ['', []],
   });
 
@@ -55,8 +59,6 @@ export default class InsumosComponent implements OnInit{
     this.insumosService.getInsumos();
   }
 
-
-
   setInsumoEditar(insumo: any) {
     this.editar = true;
     this.formInsumos.setValue({
@@ -65,7 +67,8 @@ export default class InsumosComponent implements OnInit{
       unidadesCompra: insumo.unidadesCompra,
       costoCompra: insumo.costoCompra,
       costoUnidad: insumo.costoUnidad,
-      id: insumo.id
+      basico: insumo.basico ? insumo.basico : false,
+      id: insumo.id,
     });
   }
 
@@ -81,7 +84,7 @@ export default class InsumosComponent implements OnInit{
       unidadesCompra: 0,
       costoCompra: 0,
       costoUnidad: 0,
-      id: ''
+      id: '',
     });
   }
 
@@ -119,7 +122,7 @@ export default class InsumosComponent implements OnInit{
     this.insumosService
       .postInsumo(this.formInsumos.value)
       .subscribe((res: any) => {
-        console.log(res)
+        console.log(res);
         this.ms.add({
           severity: 'success',
           summary: 'Actualizado',
@@ -129,10 +132,11 @@ export default class InsumosComponent implements OnInit{
   }
 
   updateInsumo() {
-    this.insumosService.putInsumo(this.formInsumos.value)
+    this.insumosService
+      .putInsumo(this.formInsumos.value)
       .subscribe((res: any) => {
         this.editar = false;
-        console.log(res)
+        console.log(res);
         this.ms.add({
           severity: 'success',
           summary: 'Actualizado',
@@ -141,14 +145,14 @@ export default class InsumosComponent implements OnInit{
       });
   }
 
-  calcularCostoUnidad(){
-    console.log('calculando...')
-    let costoCompra = this.formInsumos.get('costoCompra')?.value
-    let unidadesCompra = this.formInsumos.get('unidadesCompra')?.value
+  calcularCostoUnidad() {
+    console.log('calculando...');
+    let costoCompra = this.formInsumos.get('costoCompra')?.value;
+    let unidadesCompra = this.formInsumos.get('unidadesCompra')?.value;
 
-    if ( costoCompra && unidadesCompra ) {
-      let costoUnidad = costoCompra / unidadesCompra
-      this.formInsumos.get('costoUnidad')?.setValue(costoUnidad)
+    if (costoCompra && unidadesCompra) {
+      let costoUnidad = costoCompra / unidadesCompra;
+      this.formInsumos.get('costoUnidad')?.setValue(costoUnidad);
     }
   }
 }

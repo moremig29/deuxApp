@@ -59,7 +59,7 @@
                     <label class="pb-2" for="basic-icon-default-fullname">Producto</label>
                     <p-dropdown
                       formControlName="articulo"
-                      [options]="inventarioService.inventario()"
+                      [options]="productosService.productos()"
                       optionLabel="nombre"
                       optionValue="id"
                       placeholder="Seleccione un producto"

@@ -4,4 +4,5 @@ export interface Insumo {
   valor: number,
   id?: string
   _id?: string
+  basico: boolean
 }

@@ -11,6 +11,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { Router } from '@angular/router';
+import { ProductosService } from '@services/productos.service';
 
 @Component({
   selector: 'app-form-pedidos',
@@ -53,9 +54,14 @@ export default class FormPedidosComponent {
     public inventarioService: InventarioService,
     public listasService: ListasService,
     private pedidosService: PedidosService,
+    public productosService: ProductosService,
     private router: Router
   ) {
     this.setFormValues();
+  }
+
+  ngOnInit(): void {
+    this.productosService.getProductos();
   }
 
   ngOnDestroy(): void {
@@ -88,30 +94,37 @@ export default class FormPedidosComponent {
   }
 
   asignarValoresArticulo(event: any) {
-    let id = event.value;
-    let item = this.findItem(id);
 
-    console.log( item );
+    let id = event.value;
+    let productos = [...this.productosService.productos()]
+    let producto = productos.find( ( p ) => p.id === id )
+
+    let item: any;
+    producto?.insumos.forEach(element => {
+      if ( element.basico === true ) {
+        item = this.findItem(element._id);
+      }
+    });
 
     if (item) {
       this.registrarPedidoForm.get(['items', 'disponible'])?.setValue(item.final);
-      this.registrarPedidoForm.get(['items', 'precio'])?.setValue(0);
+      this.registrarPedidoForm.get(['items', 'precio'])?.setValue(producto?.precio_venta);
+      this.registrarPedidoForm.get('total')?.setValue(producto?.precio_venta);
     }
   }
 
   calcularTotal() {
 
-    let test = this.registrarPedidoForm.get('items')?.value;
-
-    let costoTotal = test.cantidad * test.precio;
-
+    let producto = this.registrarPedidoForm.get('items')?.value;
+    let costoTotal = producto.cantidad * producto.precio;
     this.registrarPedidoForm.get('total')?.setValue(costoTotal);
   }
 
   findItem(id: string) {
+    console.log( id );
     let item = this.inventarioService
       .inventario()
-      .find((articulo) => articulo.id === id);
+      .find((articulo) => articulo.insumo._id === id);
     return item;
   }
 
@@ -120,15 +133,25 @@ export default class FormPedidosComponent {
 
     const value = this.pedidosService.pedido;
 
+    console.log( value );
+
     let { id, cliente, estatus, items, ...pedido } = value;
     this.id = id;
 
-    let item = this.findItem(items.articulo._id);
+    let producto = this.productosService
+      .productos()
+      .find((p) => p.id === items.articulo._id);
 
+    let item: any;
+    producto?.insumos.forEach((element) => {
+      if (element.basico === true) {
+        item = this.findItem(element._id);
+      }
+    });
     pedido.items = items;
     pedido.items = {
-      disponible: item!.final,
-      precio: 0,//item!.producto.precio_venta,
+      disponible: item.final,
+      precio: value.total,//item!.producto.precio_venta,
       articulo: items.articulo._id,
       cantidad: items.cantidad,
     }

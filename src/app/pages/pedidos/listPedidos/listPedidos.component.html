@@ -1,12 +1,12 @@
 <div class="grid">
   <div class="col-12">
     <div class="card mb-4" style="height: 80vh">
-      <div class="card-header">
+      <div class="card-header mb-2">
         <div class="flex justify-content-between">
           <h5 class="text-500">Pedidos</h5>
           <div>
             <div style="width: 200px;">
-                <label class="pb-2" for="basic-icon-default-fullname">Estatus</label>
+                <label class="mb-2" for="basic-icon-default-fullname">Estatus</label>
                 <p-dropdown
                   [options]="listasService.estatus()"
                   optionLabel="desc"
@@ -15,8 +15,7 @@
                   [(ngModel)]="estatus"
                   class="p-inputtext-sm"
                   styleClass="w-full"
-                  (onClear)="estatus = ''"
-                  >
+                  (onClear)="estatus = ''">
                 </p-dropdown>
               </div>
           </div>
@@ -58,9 +57,13 @@
                 <td>
                   <div class="flex gap-2">
                     <i
+                    *ngIf="pedido.estatus.desc !== 'Completado'; else showBtn"
                       class="pi pi-check text-green-500 pointer"
                       (click)="completarPedido(pedido)"
                     ></i>
+                    <ng-template #showBtn>
+                      <i class="pi pi-check text-gray-500"></i>
+                    </ng-template>
                     <i
                       class="pi pi-file-edit text-yellow-500 pointer"
                       (click)="editarPedido(pedido)"

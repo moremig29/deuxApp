@@ -24,9 +24,7 @@ export class PedidosService {
   constructor(
     private http: HttpClient,
     private baseService: BaseService
-    ) {
-    this.getPedidos();
-  }
+    ) {}
 
   getPedidos(){
     return this.http.get(`${this.base_url}/pedido`, this.baseService.headers )
