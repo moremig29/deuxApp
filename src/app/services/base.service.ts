@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import { environment } from '../../environments/environment.development';
 
+const env = environment
 @Injectable({
   providedIn: 'root'
 })
 export class BaseService {
 
-  base_url: string = 'http://localhost:4000/api'
+  base_url: string = environment.baseUrl;
 
   get token() {
     return localStorage.getItem('token') || '';

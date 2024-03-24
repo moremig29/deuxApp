@@ -34,7 +34,7 @@ export default class FormCuentaComponent {
   public registrarCuentaForm: FormGroup = this.fb.group({
     desc: [''],
     cliente: ['', [Validators.required]],
-    pedido: ['', [Validators.required]],
+    pedido: [''],
     monto: [0, [Validators.required]],
     tipoTransac: ['64da5a45ff830e89b92e70a7', [Validators.required]],
     tipoCuenta: ['64da5aa7ff830e89b92e70ae', [Validators.required]],
