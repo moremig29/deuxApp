@@ -7,7 +7,7 @@
       </div>
       <div class="card-body">
         <div class="grid">
-          <div class="col-9">
+          <div class="col-12 md:col-9">
             <p-pickList
               [source]="insumosService.insumos()"
               [target]="targetProducts"
@@ -34,7 +34,7 @@
               </ng-template>
             </p-pickList>
           </div>
-          <div class="col-3">
+          <div class="col-12 md:col-3">
             <div class="mb-5">
               <div class="flex flex-column mb-2 gap-1">
                 <label class="form-label">Plantillas</label>

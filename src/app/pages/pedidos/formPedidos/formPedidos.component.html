@@ -8,7 +8,7 @@
       <div class="card-body">
         <form [formGroup]="registrarPedidoForm" (ngSubmit)="registrarPedido()">
           <div class="formgrid grid">
-            <div class="field col-4 mb-2">
+            <div class="field col-12 md:col-4 mb-2">
               <div class="flex flex-column">
                 <label class="pb-2" for="basic-icon-default-fullname">Cliente</label>
                 <p-dropdown
@@ -23,7 +23,7 @@
                 </p-dropdown>
               </div>
             </div>
-            <div class="field col-4 mb-2">
+            <div class="field field col-12 md:col-4 mb-2">
               <label class="form-label" for="basic-icon-default-fullname">Fecha de entrega</label>
               <div class="input-group input-group-merge">
                 <span class="input-group-text"><i class="bx bx-calendar"></i></span>
@@ -35,7 +35,7 @@
                   </p-calendar>
               </div>
             </div>
-            <div class="field col-4 mb-2">
+            <div class="field field col-12 md:col-4 mb-2">
               <label class="form-label" for="basic-icon-default-fullname">Lugar de entrega</label>
               <div class="input-group input-group-merge">
                 <span class="input-group-text"><i class="bx bx-user"></i></span>
@@ -54,7 +54,7 @@
                 class="formgrid grid m-0 p-0"
                 >
 
-                <div class="field col-4 mb-2">
+                <div class="field field col-12 md:col-4 mb-2">
                   <div class="flex flex-column">
                     <label class="pb-2" for="basic-icon-default-fullname">Producto</label>
                     <p-dropdown
@@ -70,7 +70,7 @@
                     </p-dropdown>
                   </div>
                 </div>
-                <div class="field col-4 mb-2">
+                <div class="field field col-12 md:col-4 mb-2">
                   <label class="form-label" for="basic-icon-default-fullname">Cantidad</label>
                   <div class="input-group input-group-merge">
                     <span class="input-group-text"><i class="bx bx-plus"></i></span>
@@ -86,7 +86,7 @@
                     </p-inputNumber>
                   </div>
                 </div>
-                <div class="field col-4 mb-2">
+                <div class="field field col-12 md:col-4 mb-2">
                   <label class="form-label" for="basic-icon-default-fullname">Disponible</label>
                   <div class="input-group input-group-merge">
                     <span class="input-group-text"><i
@@ -118,7 +118,7 @@
               </div>
             </div> -->
 
-            <div class="field col-4 mb-2">
+            <div class="field field col-12 md:col-4 mb-2">
               <label class="form-label" for="basic-icon-default-fullname">Costo Total</label>
               <div class="input-group input-group-merge">
                 <span class="input-group-text"><i class="bx bx-dollar"></i></span>
@@ -135,7 +135,7 @@
                 </p-inputNumber>
               </div>
             </div>
-            <div class="field col-4 mb-2">
+            <div class="field field col-12 md:col-4 mb-2">
               <div class="flex flex-column">
                 <label class="pb-2" for="basic-icon-default-fullname">Estatus</label>
                 <p-dropdown
@@ -183,7 +183,3 @@
     </div>
   </div>
 </div>
-
-<pre>
-  {{ this.registrarPedidoForm.value | json }}
-</pre>

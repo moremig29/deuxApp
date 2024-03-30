@@ -5,13 +5,28 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
+    path: 'auth',
+    children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+    ],
+  },
+  {
     path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./pages/dashboard/dashboard/dashboard.component'),
+        loadComponent: () =>
+          import('./pages/dashboard/dashboard/dashboard.component'),
         data: { titulo: 'precios' },
       },
       {
@@ -91,21 +106,7 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
-      }
-    ],
-  },
-  {
-    path: 'auth',
-    children: [
-      {
-        path: '',
-        redirectTo: 'login',
         pathMatch: 'full',
-      },
-      {
-        path: 'login',
-        component: LoginComponent,
       },
     ],
   },
