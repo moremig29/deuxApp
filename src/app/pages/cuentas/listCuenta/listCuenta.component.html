@@ -31,17 +31,17 @@
           </ng-template>
           <ng-template pTemplate="header">
             <tr>
-              <th pSortableColumn="precio">Fecha<p-sortIcon field="precio"></p-sortIcon>
+              <th pSortableColumn="fecha">Fecha<p-sortIcon field="fecha"></p-sortIcon>
               </th>
-              <th pSortableColumn="precio">Cliente<p-sortIcon field="cliente"></p-sortIcon>
+              <th pSortableColumn="cliente.nombre">Cliente<p-sortIcon field="cliente.nombre"></p-sortIcon>
               </th>
               <th pSortableColumn="desc">Transaccion <p-sortIcon field="desc"></p-sortIcon>
               </th>
-              <th pSortableColumn="desc">Tipo de Transaccion <p-sortIcon field="desc"></p-sortIcon>
+              <th pSortableColumn="tipoTransac.desc">Tipo de Transaccion <p-sortIcon field="tipoTransac.desc"></p-sortIcon>
               </th>
-              <th pSortableColumn="valor">Tipo Cuenta<p-sortIcon field="valor"></p-sortIcon>
+              <th pSortableColumn="tipoCuenta.desc">Tipo Cuenta<p-sortIcon field="tipoCuenta.desc"></p-sortIcon>
               </th>
-              <th pSortableColumn="valor" style="width: 80px;">Monto<p-sortIcon field="valor"></p-sortIcon></th>
+              <th pSortableColumn="monto" style="width: 80px;">Monto<p-sortIcon field="monto"></p-sortIcon></th>
               <th style="width: 8%;">Acciones</th>
             </tr>
           </ng-template>
