@@ -37,4 +37,15 @@ export default class ListCuentaComponent {
     });
   }
 
+  getSimboloOperacion(operation: string): string {
+    switch (operation) {
+      case 'Ingreso':
+        return '+';
+      case 'Egreso':
+        return '-';
+      default:
+        return ''
+    }
+  }
+
 }

@@ -5,26 +5,26 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
+  {
     path: 'auth',
     children: [
       {
         path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
-      },
-      {
-        path: 'login',
         component: LoginComponent,
       },
     ],
   },
   {
-    path: '',
+    path: 'dashboard',
     component: LayoutComponent,
     canActivate: [authGuard],
     children: [
       {
-        path: 'dashboard',
+        path: '',
         loadComponent: () =>
           import('./pages/dashboard/dashboard/dashboard.component'),
         data: { titulo: 'precios' },
