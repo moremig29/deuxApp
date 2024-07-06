@@ -99,6 +99,24 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'web',
+        data: { titulo: 'web' },
+        children: [
+          {
+            path: 'cms',
+            data: { titulo: 'CMS' },
+            loadComponent: () =>
+              import('./pages/cms/cms.component'),
+          },
+          {
+            path: 'mensajes',
+            data: { titulo: 'Lista de mensajes' },
+            loadComponent: () =>
+              import('./pages/messages/messages.component'),
+          },
+        ],
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

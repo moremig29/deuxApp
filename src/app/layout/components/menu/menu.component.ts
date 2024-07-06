@@ -110,16 +110,16 @@ export class MenuComponent {
         ],
       },
       {
-        label: 'CMS',
+        label: 'WEB',
         items: [
           {
             label: 'CMS',
-            icon: 'pi pi-fw pi-user',
+            icon: 'pi pi-fw pi-cog',
             items: [
               {
-                label: 'Proximamente',
-                icon: 'pi pi-fw pi-sign-in',
-                routerLink: ['/sm-1'],
+                label: 'cms',
+                icon: 'pi pi-fw pi-cog',
+                routerLink: ['/web/cms'],
               },
               /* {
                 label: 'Registrar',
@@ -127,6 +127,12 @@ export class MenuComponent {
                 routerLink: ['/sm-2'],
               }, */
             ],
+          },
+          {
+            label: 'Mensajes',
+            icon: 'pi pi-fw pi-inbox',
+            routerLink: ['/web/mensajes'],
+            badge: 'NEW',
           },
         ],
       },
