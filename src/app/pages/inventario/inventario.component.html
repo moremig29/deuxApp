@@ -14,6 +14,8 @@
                 formControlName="insumo"
                 [options]="insumosService.insumos()"
                 optionLabel="nombre"
+                [filter]="true"
+                filterBy="nombre"
                 optionValue="id"
                 placeholder="Seleccione un insumo"
                 class="p-inputtext-sm"
