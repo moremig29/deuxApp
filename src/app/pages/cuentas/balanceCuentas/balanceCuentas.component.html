@@ -15,6 +15,21 @@
             <label for="birth_date">Mes</label>
           </p-floatLabel>
         </div>
+
+        <div class="grid mt-3 ">
+          <div class="col-12 md:col-3">
+            <app-info-cards titulo="Ingreso Bs" borderColor="border-green-400" [valor]="cuentaService.balance().ingresoBs"></app-info-cards>
+          </div>
+          <div class="col-12 md:col-3">
+            <app-info-cards titulo="Ingreso $" borderColor="border-green-400" [valor]="cuentaService.balance().ingresoDol"></app-info-cards>
+          </div>
+          <div class="col-12 md:col-3">
+            <app-info-cards titulo="Egreso Bs" borderColor="border-red-400" [valor]="cuentaService.balance().egresoBs"></app-info-cards>
+          </div>
+          <div class="col-12 md:col-3">
+            <app-info-cards titulo="Egreso $" borderColor="border-red-400" [valor]="cuentaService.balance().egresoDol"></app-info-cards>
+          </div>
+        </div>
       </div>
 
 

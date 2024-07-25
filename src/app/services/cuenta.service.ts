@@ -21,16 +21,18 @@ export class CuentaService {
     dolEfectivo: 0,
     dolBanco: 0,
   });
+  cuentasByType = computed(() => this.#cuentasByType());
 
   #balance = signal<any>({
     ingresoBs: 0,
     ingresoDol: 0,
     egresoBs: 0,
-    egresoDol: 0
-    })
+    egresoDol: 0,
+  });
+  balance = computed(() => this.#balance());
 
-  cuentasByType = computed(() => this.#cuentasByType());
   cuenta: any | undefined;
+
 
   loading = computed(() => this.#cuentas().loading);
   cuentas = computed(() => this.#cuentas().cuentas);
@@ -67,7 +69,7 @@ export class CuentaService {
       });
   }
 
-  getcuentaBalanceByMonth(mes:number){
+  getcuentaBalanceByMonth(mes: number) {
     return this.http
       .post(
         `${this.base_url}/cuenta/cuentaBalanceByMonth`,
