@@ -58,8 +58,13 @@ export class MenuComponent {
               },
               {
                 label: 'Registrar',
-                icon: 'pi pi-fw pi-sign-in',
+                icon: 'pi pi-fw pi-money-bill',
                 routerLink: ['/cuenta/registrar'],
+              },
+              {
+                label: 'Balance',
+                icon: 'pi pi-fw pi-chart-pie',
+                routerLink: ['/cuenta/balance'],
               },
             ],
           },

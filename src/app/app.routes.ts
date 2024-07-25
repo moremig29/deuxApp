@@ -45,6 +45,12 @@ export const routes: Routes = [
               import('./pages/cuentas/formCuenta/formCuenta.component'),
             data: { titulo: 'Configurar producto' },
           },
+          {
+            path: 'balance',
+            loadComponent: () =>
+              import('./pages/cuentas/balanceCuentas/balanceCuentas.component'),
+            data: { titulo: 'Balance cuentas' },
+          },
         ],
       },
       {
@@ -105,14 +111,12 @@ export const routes: Routes = [
           {
             path: 'cms',
             data: { titulo: 'CMS' },
-            loadComponent: () =>
-              import('./pages/cms/cms.component'),
+            loadComponent: () => import('./pages/cms/cms.component'),
           },
           {
             path: 'mensajes',
             data: { titulo: 'Lista de mensajes' },
-            loadComponent: () =>
-              import('./pages/messages/messages.component'),
+            loadComponent: () => import('./pages/messages/messages.component'),
           },
         ],
       },

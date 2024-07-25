@@ -16,13 +16,21 @@ export class CuentaService {
   });
 
   #cuentasByType = signal<Saldo>({
-  bolEfectivo: 0,
-  bolbanco:    0,
-  dolEfectivo: 0,
-  dolBanco:    0,
-})
-  cuentasByType = computed( () => this.#cuentasByType() );
-  cuenta: any | undefined
+    bolEfectivo: 0,
+    bolbanco: 0,
+    dolEfectivo: 0,
+    dolBanco: 0,
+  });
+
+  #balance = signal<any>({
+    ingresoBs: 0,
+    ingresoDol: 0,
+    egresoBs: 0,
+    egresoDol: 0
+    })
+
+  cuentasByType = computed(() => this.#cuentasByType());
+  cuenta: any | undefined;
 
   loading = computed(() => this.#cuentas().loading);
   cuentas = computed(() => this.#cuentas().cuentas);
@@ -41,16 +49,14 @@ export class CuentaService {
   }
 
   postCuenta(cuenta: any) {
-    return this.http.post(
-      `${this.base_url}/cuenta`,
-      cuenta,
-      this.baseService.headers
-    ). pipe(
-      tap( () => {
-        this.getCuentas();
-        this.getCuentasByType();
-      }
-    ))
+    return this.http
+      .post(`${this.base_url}/cuenta`, cuenta, this.baseService.headers)
+      .pipe(
+        tap(() => {
+          this.getCuentas();
+          this.getCuentasByType();
+        })
+      );
   }
 
   getCuentasByType() {
@@ -61,21 +67,37 @@ export class CuentaService {
       });
   }
 
+  getcuentaBalanceByMonth(mes:number){
+    return this.http
+      .post(
+        `${this.base_url}/cuenta/cuentaBalanceByMonth`,
+        { month: mes },
+        this.baseService.headers
+      )
+      .subscribe((res: any) => {
+        this.#balance.set(res.balance);
+      });
+  }
+
   putCuenta(id: string, cuenta: any) {
     return this.http
       .put(`${this.base_url}/cuenta/${id}`, cuenta, this.baseService.headers)
-      .pipe(tap( () => {
-        this.getCuentas()
-        this.getCuentasByType()
-      } ))
+      .pipe(
+        tap(() => {
+          this.getCuentas();
+          this.getCuentasByType();
+        })
+      );
   }
 
-  deleteCuenta(id: string ) {
+  deleteCuenta(id: string) {
     return this.http
       .delete(`${this.base_url}/cuenta/${id}`, this.baseService.headers)
-      .pipe(tap(() => {
-        this.getCuentas();
-        this.getCuentasByType();
-      }));
+      .pipe(
+        tap(() => {
+          this.getCuentas();
+          this.getCuentasByType();
+        })
+      );
   }
 }

@@ -1,0 +1,23 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="text-500">Balance Cuentas</h5>
+      </div>
+      <div class="card-body">
+        <div class="flex mt-6">
+          <p-floatLabel>
+            <p-calendar
+              [(ngModel)]="date"
+              view="month"
+              (ngModelChange)="monthChange()"
+              inputId="birth_date" />
+            <label for="birth_date">Mes</label>
+          </p-floatLabel>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
