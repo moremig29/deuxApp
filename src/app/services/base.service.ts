@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 const env = environment
 @Injectable({
