@@ -122,9 +122,9 @@ export class MenuComponent {
             icon: 'pi pi-fw pi-cog',
             items: [
               {
-                label: 'cms',
+                label: 'config',
                 icon: 'pi pi-fw pi-cog',
-                routerLink: ['/app/web/cms'],
+                routerLink: ['/app/web/config'],
               },
               /* {
                 label: 'Registrar',

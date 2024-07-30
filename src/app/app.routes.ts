@@ -109,9 +109,9 @@ export const routes: Routes = [
         data: { titulo: 'web' },
         children: [
           {
-            path: 'cms',
-            data: { titulo: 'CMS' },
-            loadComponent: () => import('./pages/cms/cms.component'),
+            path: 'config',
+            data: { titulo: 'config' },
+            loadComponent: () => import('./pages/cms/cms-config.component'),
           },
           {
             path: 'mensajes',
